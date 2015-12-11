@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var Backlog = mongoose.model('Backlog');
+var user = mongoose.model('User');
+var payment = mongoose.model('Payment');
+var bill = mongoose.model('Bill');
 
-//Get all backlogs
-router.get('/backlogs', function(req, res) {
+router.get('/home', function(req, res) {
       return res;
 });
 

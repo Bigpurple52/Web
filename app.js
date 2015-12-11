@@ -1,9 +1,11 @@
 //Setup database et dependencies
 var mongoose = require('mongoose');
-require('./models/home');
-mongoose.connect('mongodb://localhost/bigpurple52_webProject');
-// connextion a la base de données online (mongolab)
-//mongoose.connect('mongodb://scrum:developpement@ds047458.mongolab.com:47458/projetscrumdev');
+require('./models/User');
+require('./models/Group');
+require('./models/Payment');
+require('./models/Bill');
+mongoose.connect('mongodb://localhost/bigpurple52_Web');
+
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
