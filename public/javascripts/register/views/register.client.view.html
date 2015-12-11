@@ -1,4 +1,41 @@
 <section>
-    <h1 class="page-header">register</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Inscription
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form role="form">
+                        <div class="form-group">
+                        	<label for="mail">Adresse mail:</label>
+                            <input type="email" class="form-control" placeholder="Email" ng-model="mail" required>
+                            </input>
+                            <br>
+                            <label for="pass">Mot de passe:</label>
+                            <input type="password" class="form-control" placeholder="Votre mot de passe" ng-model="pass" required>
+                            </input>
+                            <br>
+                            <label for="pass2">Mot de passe:</label>
+                            <input type="password" class="form-control" placeholder="Re-tapez votre mot de passe" ng-model="pass2" required>
+                            </input>
+                            <br>
+                            <label for="pseudo">Pseudonyme:</label>
+                            <input type="text" class="form-control" placeholder="Votre pseudonyme" ng-model="pseudo" required>
+                            </input>
+                            <br>
+                        </div>
+                        <button class="btn btn-primary" ng-click="addUser()">Ajouter</button>
+                        <a href="#/home">
+                            <button class="btn btn-warning">Annuler</button>
+                        </a>
+                    </form>
+                </div>
+                <!-- /.col-lg-6 (nested) -->
+            </div>
+            <!-- /.row (nested) -->
+        </div>
+        <!-- /.panel-body -->
+    </div>
 </section>
 

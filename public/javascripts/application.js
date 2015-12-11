@@ -27,7 +27,7 @@ function($stateProvider, $urlRouterProvider) {
       // anytime our home state is entered, we will automatically check if the user is connected and if he is then diplay the main screen
       resolve: {
         testPromise: ['register', function(register){
-          return register.isConnected();
+          return register.getAll();
         }]
       }
     })

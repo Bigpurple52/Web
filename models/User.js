@@ -4,7 +4,7 @@ var UserSchema = new mongoose.Schema({
   mail: String,
   pass: String,
   pseudo: String,
-  ami: []
+  friend: []
 });
 
 mongoose.model('User', UserSchema);
