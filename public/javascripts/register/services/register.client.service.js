@@ -1,7 +1,7 @@
 //Service
-angular.module('test').factory('test', ['$http', function($http) {
+angular.module('register').factory('register', ['$http', function($http) {
     var o = {
-        test : []
+        users : []
     };
 
     o.isConnected = function() {

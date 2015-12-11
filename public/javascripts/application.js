@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','test']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -20,14 +20,14 @@ function($stateProvider, $urlRouterProvider) {
     		}]
   	  }
     })
-    .state('test', {
-      url: '/test',
-      templateUrl: 'javascripts/test/views/test.client.view.html',
-      controller: 'TestCtrl',
+    .state('register', {
+      url: '/register',
+      templateUrl: 'javascripts/register/views/register.client.view.html',
+      controller: 'RegisterCtrl',
       // anytime our home state is entered, we will automatically check if the user is connected and if he is then diplay the main screen
       resolve: {
-        testPromise: ['test', function(test){
-          return test.isConnected();
+        testPromise: ['register', function(register){
+          return register.isConnected();
         }]
       }
     })
