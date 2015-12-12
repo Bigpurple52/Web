@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -11,7 +11,7 @@ function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'javascripts/home/views/home.client.view.html',
+      templateUrl: 'javascripts/home/home.client.view.html',
       controller: 'HomeCtrl',
   	  // anytime our home state is entered, we will automatically check if the user is connected and if he is then diplay the main screen
   	  resolve: {
@@ -22,12 +22,21 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('register', {
       url: '/register',
-      templateUrl: 'javascripts/register/views/register.client.view.html',
+      templateUrl: 'javascripts/register/register.client.view.html',
       controller: 'RegisterCtrl',
-      // anytime our home state is entered, we will automatically check if the user is connected and if he is then diplay the main screen
       resolve: {
-        testPromise: ['register', function(register){
+        registerPromise: ['register', function(register){
           return register.getAll();
+        }]
+      }
+    })
+    .state('connection', {
+      url: '/connection',
+      templateUrl: 'javascripts/connection/connection.client.view.html',
+      controller: 'ConnectionCtrl',
+      resolve: {
+        connectionPromise: ['connection', function(connection){
+          return connection.getAll();
         }]
       }
     })

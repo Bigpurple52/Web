@@ -12,15 +12,4 @@ router.get('/register', function(req, res) {
     });
 });
 
-router.post('/register', function(req, res, next) {
-    var user = new users(req.body);
-
-    user.save(function(err, user) {
-        if (err) {
-            return next(err);
-        }
-        res.json(user);
-    });
-});
-
 module.exports = router;

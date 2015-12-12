@@ -1,4 +1,4 @@
-//Backlog controller
+//home controller
 angular.module('home').controller('HomeCtrl', [
     '$scope',
     'home',
