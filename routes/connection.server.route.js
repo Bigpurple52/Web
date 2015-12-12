@@ -3,7 +3,7 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var users = mongoose.model('User');
 
-router.get('/register', function(req, res) {
+router.get('/connection', function(req, res) {
     users.find(function(err, doc) {
         if (err) {
             return (err);
