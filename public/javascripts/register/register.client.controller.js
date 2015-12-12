@@ -28,8 +28,6 @@ angular.module('register').controller('RegisterCtrl', [
                 $scope.pass = '';
                 $scope.pass2 = '';
             }
-
-
         };
     }
 ]);
