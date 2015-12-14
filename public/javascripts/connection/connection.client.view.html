@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-lg-6">
             <form name="registerForm" role="form" novalidate>
-                <div class="form-group" ng-show="validation">
+                <div class="form-group" ng-show="!validation">
                     <span class="alert alert-danger">Les identifiants indiqués sont incorrects !</span>
                 </div>
                 <div class="form-group" ng-class="{'has-error': registerForm.mail.$invalid && registerForm.mail.$dirty}">

@@ -10,5 +10,18 @@ angular.module('connection').factory('connection', ['$http', function($http) {
         });
     };
 
+    o.connected = function (user) {
+    	return $http.post('/connection', user).success(function(data) {
+    		if(data.length != 0){
+                sessionStorage.setItem('id', data[0]._id);
+    			sessionStorage.setItem('mail', data[0].mail);
+                sessionStorage.setItem('pseudo', data[0].pseudo);
+    			document.location.href = "#/home";
+    		}else{
+    			document.location.href = "#/connection/?q=false";
+    		}
+        })
+    }
+
     return o;
-}]);
+}])

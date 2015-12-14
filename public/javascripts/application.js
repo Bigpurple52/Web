@@ -30,6 +30,16 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }
     })
+    .state('connection/q', {
+      url: '/connection/:q',
+      templateUrl: 'javascripts/connection/connection.client.view.html',
+      controller: 'ConnectionCtrl',
+      resolve: {
+        connectionPromise: ['connection', function(connection){
+          return connection.getAll();
+        }]
+      }      
+    })
     .state('connection', {
       url: '/connection',
       templateUrl: 'javascripts/connection/connection.client.view.html',
@@ -38,13 +48,35 @@ function($stateProvider, $urlRouterProvider) {
         connectionPromise: ['connection', function(connection){
           return connection.getAll();
         }]
-      }
+      }      
     })
-	
-  // redirect unspecified routes
-  $urlRouterProvider.otherwise('home');
+
+    // redirect unspecified routes
+    $urlRouterProvider.otherwise('home');
 }]);
 
+function loadSession(){
+  if(sessionStorage.getItem('id') != null){
+    document.getElementById("getPseudo").innerHTML = sessionStorage.getItem('pseudo')+" ";
+    document.getElementById("getId").innerHTML = sessionStorage.getItem('id');
+  }else if(document.location.href!="http://localhost:3000/#/register"){
+    document.location.href = "http://localhost:3000/#/connection;"
+  }
+};
+
+function isConnected(){
+  alert(sessionStorage.getItem('id'));
+  if(sessionStorage.getItem('id') !=null){
+    this.innerHTML = true;
+  }else{
+    this.innerHTML = true;
+  }
+}
+
+function deleteSession(){
+  sessionStorage.clear();
+  alert('Deconnexion réussie !');
+}
 
 angular.element(document).ready(function() {
   angular.bootstrap(document, [mainApplicationModuleName]);
