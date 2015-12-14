@@ -15,12 +15,27 @@ router.get('/register', function(req, res) {
 router.post('/register', function(req, res, next) {
     var user = new users(req.body);
 
-    user.save(function(err, user) {
+    var query = {
+        "mail": req.body.mail,
+    };
+
+    users.find(query,function(err, doc) {
         if (err) {
-            return next(err);
+            return (err);
         }
-        res.json(user);
+        if(doc.length != 0){
+            res.send("erreur");
+        }else{
+            user.save(function(err, user) {
+                if (err) {
+                    return next(err);
+                }
+                res.json(user);
+            });
+        }
     });
+
+    
 });
 
 module.exports = router;

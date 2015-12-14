@@ -24,7 +24,6 @@ angular.module('register').controller('RegisterCtrl', [
                 $scope.pass2 = '';
                 $scope.pseudo = '';
             }else{
-                alert("Les mots de passe ne sont pas identiques.");
                 $scope.pass = '';
                 $scope.pass2 = '';
             }

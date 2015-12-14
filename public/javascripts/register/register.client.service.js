@@ -12,7 +12,13 @@ angular.module('register').factory('register', ['$http', function($http) {
 
     o.createUser = function(user) {
         return $http.post('/register', user).success(function(data) {
-           	o.users.push(data);
+            if(data == 'erreur'){
+                alert('Adresse mail déjà utilisée');
+            }else{
+               	o.users.push(data);
+                document.location.href = "#/connection";
+                alert('Inscription réussie !');
+            }
         });
     };
 
