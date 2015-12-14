@@ -61,7 +61,7 @@ function loadSession(){
     document.getElementById("hideConnected").classList.add('ng-hide');
     document.getElementById("hideNotConnected").classList.remove('ng-hide');
   }else if(document.location.href!="http://localhost:3000/#/register"){
-    document.location.href = "http://localhost:3000/#/connection;"
+    document.location.href = "http://localhost:3000/#/connection";
     document.getElementById("hideConnected").classList.remove('ng-hide');
     document.getElementById("hideNotConnected").classList.add('ng-hide');
   }
