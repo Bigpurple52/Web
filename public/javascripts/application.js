@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -50,6 +50,17 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }      
     })
+    .state('userProfile/id', {
+      url: '/userProfile/:id',
+      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
+      controller: 'UserProfileCtrl',
+      resolve: {
+        connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
+          userProfile.setIdUser($stateParams.id);
+          return userProfile.get($stateParams.id);
+        }]
+      }      
+    })
 
     // redirect unspecified routes
     $urlRouterProvider.otherwise('home');
@@ -66,6 +77,10 @@ function loadSession(){
     document.getElementById("hideNotConnected").classList.add('ng-hide');
   }
 };
+
+function userProfile(){
+  document.location.href = "#/userProfile/"+sessionStorage.getItem('id');
+}
 
 function deleteSession(){
   sessionStorage.clear();
