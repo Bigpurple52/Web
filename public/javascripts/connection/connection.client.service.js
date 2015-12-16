@@ -16,6 +16,7 @@ angular.module('connection').factory('connection', ['$http', function($http) {
                 sessionStorage.setItem('id', data[0]._id);
     			sessionStorage.setItem('mail', data[0].mail);
                 sessionStorage.setItem('pseudo', data[0].pseudo);
+                sessionStorage.setItem('pass', data[0].pass);
     			document.location.href = "/";
     		}else{
     			document.location.href = "#/connection/?q=false";

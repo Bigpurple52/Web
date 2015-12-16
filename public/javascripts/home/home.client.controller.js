@@ -4,5 +4,11 @@ angular.module('home').controller('HomeCtrl', [
     'home',
     function($scope, home) {
         $scope.home = home.home;
+        
+        $scope.init = function(){
+	        if(!sessionStorage.getItem('id')){
+	        	document.location.href='#/connection';
+	        }
+   	 	}
     }
 ]);

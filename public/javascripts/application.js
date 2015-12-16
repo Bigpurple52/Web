@@ -13,10 +13,9 @@ function($stateProvider, $urlRouterProvider) {
       url: '/home',
       templateUrl: 'javascripts/home/home.client.view.html',
       controller: 'HomeCtrl',
-  	  // anytime our home state is entered, we will automatically check if the user is connected and if he is then diplay the main screen
   	  resolve: {
     		homePromise: ['home', function(home){
-    		  return home.isConnected();
+          return home.getAll();
     		}]
   	  }
     })
@@ -56,7 +55,6 @@ function($stateProvider, $urlRouterProvider) {
       controller: 'UserProfileCtrl',
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
-          userProfile.setIdUser($stateParams.id);
           return userProfile.get($stateParams.id);
         }]
       }      

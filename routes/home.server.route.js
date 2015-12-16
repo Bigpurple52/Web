@@ -1,12 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var user = mongoose.model('User');
-var payment = mongoose.model('Payment');
-var bill = mongoose.model('Bill');
+var users = mongoose.model('User');
 
 router.get('/home', function(req, res) {
-      return res;
+	 users.find(function(err, doc) {
+        if (err) {
+            return (err);
+        }
+        res.json(doc);
+    });
 });
 
 module.exports = router;
