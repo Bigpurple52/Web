@@ -5,7 +5,7 @@ var users = mongoose.model('User');
 
 router.get('/userProfile/:id', function(req, res) {
     var query = {"id": req.params.id};
-	 users.findOne(function(err, doc) {
+	users.findOne(function(err, doc) {
         if (err) {
             return (err);
         }
