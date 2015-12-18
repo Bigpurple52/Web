@@ -16,5 +16,14 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         });
     };
 
+    o.updateUser = function(user) {
+        return $http.put('/userProfile/' + user.id, user).success(function(response) {
+        	sessionStorage.setItem('mail', response.mail);
+            sessionStorage.setItem('pseudo', response.pseudo);
+            sessionStorage.setItem('pass', response.pass);
+            return response;
+        });
+    };
+
     return o;
 }]);

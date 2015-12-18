@@ -14,9 +14,22 @@ router.get('/userProfile/:id', function(req, res) {
 });
 
 router.delete('/userProfile/:id', function(req, res) {
-  users.remove({_id: req.params.id}, function(err, doc) {
+  users.findOneAndRemove({_id: req.params.id}, function(err, doc) {
     if (err) { return err; }
       res.json(doc);
+    });
+});
+
+router.put('/userProfile/:id', function(req, res) {
+
+	var query = req.params.id;
+	var update = {mail: req.body.mail, pass: req.body.pass, pseudo: req.body.pseudo};
+	var option = {new: true};
+
+    users.findOneAndUpdate(query, update, option, function(err, doc) {
+    	if (err) { return err; }
+    	console.log(doc);
+        res.json(doc);
     });
 });
 

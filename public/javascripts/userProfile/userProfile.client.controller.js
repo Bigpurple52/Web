@@ -35,26 +35,25 @@ angular.module('userProfile').controller('UserProfileCtrl', [
 
         $scope.updateUser = function() {
 
-            /*if (!$scope.mail || !$scope.pass || !$scope.pass2 || !$scope.pseudo) {
+            if (!$scope.mail || !$scope.pass || !$scope.pass2 || !$scope.pseudo) {
                 return;
             }
 
             if($scope.pass == $scope.pass2){
-                register.createUser({
+                userProfile.updateUser({
+                    id: sessionStorage.getItem('id'),
                     mail: $scope.mail,
                     pass: $scope.pass,
                     pseudo: $scope.pseudo,
-                    friend: ""
-                });
-                
-                $scope.mail = '';
+                });         
                 $scope.pass = '';
                 $scope.pass2 = '';
-                $scope.pseudo = '';
             }else{
                 $scope.pass = '';
                 $scope.pass2 = '';
-            }*/
+            }
+            alert("Modification effectuée");
+            document.location.href='/';
         };
     }
 ]);
