@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var BillSchema = new mongoose.Schema({
-  userpaid: String,
+  userpaid: { type: String, required: true },
   users: [],
   date: {type: String, default: Date()}
 });
