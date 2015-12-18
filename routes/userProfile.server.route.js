@@ -13,4 +13,11 @@ router.get('/userProfile/:id', function(req, res) {
     });
 });
 
+router.delete('/userProfile/:id', function(req, res) {
+  users.remove({_id: req.params.id}, function(err, doc) {
+    if (err) { return err; }
+      res.json(doc);
+    });
+});
+
 module.exports = router;

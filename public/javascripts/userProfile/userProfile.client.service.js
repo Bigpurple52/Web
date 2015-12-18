@@ -10,5 +10,11 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         });
     };
 
+    o.deleteUser = function(user) {
+        return $http.delete('/userProfile/' + user.id).success(function(response) {
+        	return response;
+        });
+    };
+
     return o;
 }]);
