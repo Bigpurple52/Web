@@ -51,6 +51,7 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
 });
 
 router.delete('/userProfile/:id', function(req, res) {
+    //TO DO faudra aussi remove l'user dans les listes d'ami s'inspirer du delete d'ami
     //users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
     //    if (err) { return err; }
     //        res.json(doc);
