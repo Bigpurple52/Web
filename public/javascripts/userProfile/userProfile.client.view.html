@@ -2,25 +2,38 @@
     <h1 class="page-header">User profile</h1>
     <div class="row">
         <div class="col-lg-6">
+            <h2>Informations de votre compte :</h2>
             <form name="updateForm" role="form" novalidate>
                 <div class="form-group" ng-class="{'has-error': updateForm.mail.$invalid && updateForm.mail.$dirty, 'has-success': updateForm.mail.$valid}">
                 	<label for="mail">Adresse mail:</label>
                     <input type="email" class="form-control" name="mail" placeholder="Email" ng-model="mail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                        <span class="error" ng-show="updateForm.mail.$error.required && updateForm.mail.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="updateForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
                     </input>
                 </div>
                 <div class="form-group" ng-class="{'has-error': updateForm.pass.$invalid && updateForm.pass.$dirty, 'has-success': updateForm.pass.$valid}">
                     <label for="pass">Mot de passe:</label>
                     <input type="password" class="form-control" name="pass" placeholder="Votre mot de passe" ng-model="pass" required ng-minlength="4" ng-maxlength="12">
+                        <span class="error" ng-show="updateForm.pass.$error.required && updateForm.pass.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="updateForm.pass.$error.minlength">Mot de passe trop court (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="updateForm.pass.$error.maxlength">Mot de passe trop long (Entre 4 et 12 caractères)</span>
                     </input>
                 </div>
                 <div class="form-group" ng-class="{'has-error': updateForm.pass2.$invalid && updateForm.pass2.$dirty, 'has-success': updateForm.pass2.$valid}">
                     <label for="pass2">Mot de passe:</label>
                     <input type="password" class="form-control" name="pass2" placeholder="Re-tapez votre mot de passe" ng-model="pass2" required ng-minlength="4" ng-maxlength="12" ng-pattern="{{pass}}">
+                        <span class="error" ng-show="updateForm.pass2.$error.required && updateForm.pass2.$dirty">Ce champ doit être rempli</span>
+                        <span class="error has-error" ng-show="updateForm.pass2.$error.minlength">Mot de passe trop court (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="updateForm.pass2.$error.maxlength">Mot de passe trop long (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="updateForm.pass2.$error.pattern">Mots de passe différents</span>
                     </input>
                 </div>
                 <div class="form-group" ng-class="{'has-error': updateForm.pseudo.$invalid && updateForm.pseudo.$dirty, 'has-success': updateForm.pseudo.$valid}">
                     <label for="pseudo">Pseudonyme:</label>
                     <input type="text" class="form-control" name="pseudo" placeholder="Votre pseudonyme" ng-model="pseudo" required ng-minlength="2" ng-maxlength="12">
+                        <span class="error" ng-show="updateForm.pseudo.$error.required && updateForm.pseudo.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="updateForm.pseudo.$error.minlength">Pseudonyme trop court (Entre 2 et 12 caractères)</span>
+                        <span class="error" ng-show="updateForm.pseudo.$error.maxlength">Pseudonyme trop long (Entre 2 et 12 caractères)</span>
                     </input>
                 </div>
                 <button class="btn btn-primary" ng-click="updateUser()" ng-disabled="updateForm.$invalid">Editer</button>
@@ -28,9 +41,31 @@
                     <button class="btn btn-warning">Annuler</button>
                 </a>
             </form>
+
+            <hr class="hrtrait"/>
+            <h2> Ajouter un ami :</h2>
+            <form name="friendForm" role="form" novalidate>
+               <div class="form-group" ng-class="{'has-error': friendForm.mail.$invalid && friendForm.mail.$dirty, 'has-success': friendForm.mail.$valid}">
+                    <label for="mail">Adresse mail:</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Email de votre ami(e)" ng-model="friendMail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                        <span class="error" ng-show="friendForm.mail.$error.required && friendForm.mail.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="friendForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
+                    </input>
+                </div>
+                <button class="btn btn-primary" ng-click="addFriend()" ng-disabled="friendForm.$invalid">Ajouter</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
+            </form>
+
+            <hr class="hrtrait"/>
+            <h2>Suppression de votre compte :</h2>
             <form name="deleteForm" role="form" novalidate>
                 <input type="checkbox" ng-model="check" required> Cliquer si vous êtes sur de vouloir supprimer votre compte
                 <button class="btn btn-danger" ng-click="deleteUser()" ng-disabled="deleteForm.$invalid">Supprimer compte</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
             </form>
         </div>
         <!-- /.col-lg-6 (nested) -->

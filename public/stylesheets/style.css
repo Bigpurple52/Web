@@ -12,6 +12,12 @@ h1{
 	font-size: 50px;
 }
 
+h2{
+	color:#337AB7;
+	font-family: 'Arizonia', Papyrus;
+	font-size: 35px;
+}
+
 .navbar-default .navbar-brand{
   color: #275e8b;
   font-family: 'Arizonia', Papyrus;

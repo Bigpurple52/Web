@@ -34,7 +34,6 @@ angular.module('userProfile').controller('UserProfileCtrl', [
         };
 
         $scope.updateUser = function() {
-
             if (!$scope.mail || !$scope.pass || !$scope.pass2 || !$scope.pseudo) {
                 return;
             }
@@ -44,7 +43,7 @@ angular.module('userProfile').controller('UserProfileCtrl', [
                     id: sessionStorage.getItem('id'),
                     mail: $scope.mail,
                     pass: $scope.pass,
-                    pseudo: $scope.pseudo,
+                    pseudo: $scope.pseudo
                 });         
                 $scope.pass = '';
                 $scope.pass2 = '';
@@ -54,6 +53,22 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             }
             alert("Modification effectuée");
             document.location.href='/';
+        };
+
+         $scope.addFriend = function() {
+            if (!$scope.friendMail) {
+                return;
+            }
+            userProfile.addFriend({
+                id: sessionStorage.getItem('id'),
+                usermail: sessionStorage.getItem('mail'),
+                userpseudo: sessionStorage.getItem('pseudo'),
+                friendmail: $scope.friendMail
+            });   
+
+            $scope.friendMail = '';
+            //alert("Ami(e) ajouté(e)");
+            document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
     }
 ]);

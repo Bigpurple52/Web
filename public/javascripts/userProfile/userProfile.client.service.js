@@ -25,5 +25,12 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         });
     };
 
+    o.addFriend = function(user) {
+        return $http.put('/userProfile/' + user.id, user).success(function(response) {
+            alert(response);
+            return response;
+        });
+    };
+
     return o;
 }]);
