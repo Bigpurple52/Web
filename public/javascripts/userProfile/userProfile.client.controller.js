@@ -55,7 +55,7 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             document.location.href='/';
         };
 
-         $scope.addFriend = function() {
+        $scope.addFriend = function() {
             if (!$scope.friendMail) {
                 return;
             }
@@ -67,7 +67,19 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             });   
 
             $scope.friendMail = '';
-            //alert("Ami(e) ajouté(e)");
+            document.location.href='#/userProfile/'+sessionStorage.getItem('id');
+        };
+
+        $scope.removeFriend = function() {
+            if (!$scope.unfriendMail) {
+                return;
+            }
+            userProfile.removeFriend({
+                id: sessionStorage.getItem('id'),
+                mail: $scope.unfriendMail
+            });   
+
+            $scope.unfriendMail = '';
             document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
     }

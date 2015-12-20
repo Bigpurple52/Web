@@ -4,7 +4,7 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         userProfile : []
     };
 
-    o.get = function(id) {
+    o.getAll = function(id) {
         return $http.get('/userProfile/' + id).success(function(data) {
         	angular.copy(data, o.userProfile);
         });
@@ -27,6 +27,13 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
 
     o.addFriend = function(user) {
         return $http.put('/userProfile/' + user.id, user).success(function(response) {
+            alert(response);
+            return response;
+        });
+    };
+
+    o.removeFriend = function(user) {
+        return $http.delete('/userProfile/' + user.id + '/' + user.mail).success(function(response) {
             alert(response);
             return response;
         });

@@ -59,6 +59,22 @@
             </form>
 
             <hr class="hrtrait"/>
+            <h2> Supprimer un ami :</h2>
+            <form name="removeFriendForm" role="form" novalidate>
+               <div class="form-group" ng-class="{'has-error': removeFriendForm.mail.$invalid && removeFriendForm.mail.$dirty, 'has-success': removeFriendForm.mail.$valid}">
+                    <label for="mail">Adresse mail:</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Email de votre ami(e)" ng-model="unfriendMail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                        <span class="error" ng-show="removeFriendForm.mail.$error.required && removeFriendForm.mail.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="removeFriendForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
+                    </input>
+                </div>
+                <button class="btn btn-danger" ng-click="removeFriend()" ng-disabled="removeFriendForm.$invalid">Supprimer</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
+            </form>
+
+            <hr class="hrtrait"/>
             <h2>Suppression de votre compte :</h2>
             <form name="deleteForm" role="form" novalidate>
                 <input type="checkbox" ng-model="check" required> Cliquer si vous êtes sur de vouloir supprimer votre compte

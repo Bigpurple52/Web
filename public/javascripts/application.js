@@ -49,13 +49,23 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }      
     })
+    .state('userProfile/id/mail', {
+      url: '/userProfile/:id/:mail',
+      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
+      controller: 'UserProfileCtrl',
+      resolve: {
+        connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
+          return userProfile.getAll();
+        }]
+      }      
+    })
     .state('userProfile/id', {
       url: '/userProfile/:id',
       templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
       controller: 'UserProfileCtrl',
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
-          return userProfile.get($stateParams.id);
+          return userProfile.getAll();
         }]
       }      
     })

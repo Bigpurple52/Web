@@ -12,11 +12,49 @@ router.get('/userProfile/:id', function(req, res) {
     });
 });
 
+router.delete('/userProfile/:id/:mail', function(req, res) {
+    users.findOne({"mail": req.params.mail}, function(err, doc){
+        if (err) { return err; }
+        //Check if the friend is actually registered
+        if(doc){
+            var newfriendUser;
+            var newfriend;
+            users.findOne({"_id": req.params.id}, function(err, currentUser) {
+                var size = currentUser.friends.length;
+                if (err) { return err; }
+                if(size == 0){
+                    res.send("Vous n'avez pas d'ami");
+                }else{
+                    //Search the friend in your friends list
+                    newfriendUser = currentUser.friends.filter(function(element){
+                        return (element.mail != req.params.mail);
+                    })
+                    if(size != newfriendUser.length){
+                        users.findOneAndUpdate({"_id" : currentUser._id}, {$set: {"friends": newfriendUser}}, {new: true}, function(err, doc) {
+                        });
+
+                        newfriend = doc.friends.filter(function(element){
+                            return (element.mail != currentUser.mail);
+                        })
+                        users.findOneAndUpdate({"_id" : doc._id}, {$set: {"friends": newfriend}}, {new: true}, function(err, doc) {
+                        });
+                        res.send("Utilisateur retiré de votre liste d'ami");
+                    }else{
+                        res.send("L'utilisateur n'est pas votre ami");
+                    }
+                }
+            });
+        }else{
+            res.send("Utilisateur inconnu");
+        }
+    }); 
+});
+
 router.delete('/userProfile/:id', function(req, res) {
-  users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
-    if (err) { return err; }
-      res.json(doc);
-    });
+    //users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
+    //    if (err) { return err; }
+    //        res.json(doc);
+    //});
 });
 
 router.put('/userProfile/:id', function(req, res) {
@@ -32,6 +70,10 @@ router.put('/userProfile/:id', function(req, res) {
         	if (err) { return err; }
             res.json(doc);
         });
+        /*TO DO
+            Update sur la liste des amis des amis du l'user qui vient de changer
+            s'inpirer du delete !
+        */
     //add friend
     }else{
         var friend = {};
@@ -40,16 +82,16 @@ router.put('/userProfile/:id', function(req, res) {
             "mail" : req.body.usermail,
             "pseudo" : req.body.userpseudo
         };
-        //console.log(req.body.mail);
         users.findOne({"mail": req.body.friendmail}, function(err, doc){
             if (err) { return err; }
-            //Friend existe
+            //Check if this user is actually registered
             if(doc){
                 friend ={
                     "_id" : doc._id,
                     "mail" : doc.mail,
                     "pseudo" : doc.pseudo
                 };
+                //Check if this is not the current user
                 if(friend._id != req.params.id){
                     var checkFriend = true;
                     doc.friends.forEach(function(element, index, array){
@@ -57,6 +99,7 @@ router.put('/userProfile/:id', function(req, res) {
                             checkFriend = false;
                         }
                     });
+                    //Check if they are not already friends
                     if(checkFriend){
                         users.findOneAndUpdate({"_id" : currentUser._id}, {$push: {"friends": friend}}, option, function(err, doc) {
                             if (err) { return err; }
