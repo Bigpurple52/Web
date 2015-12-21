@@ -51,7 +51,7 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
 });
 
 router.delete('/userProfile/:id', function(req, res) {
-   /* var updatefriend = [];
+    var updatefriend = [];
     users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
         if (err) { return err; }
         doc.friends.forEach(function(element, index, array){
@@ -67,7 +67,7 @@ router.delete('/userProfile/:id', function(req, res) {
             });
         });
         res.json(doc);
-    });*/
+    });
 });
 
 router.put('/userProfile/:id', function(req, res) {

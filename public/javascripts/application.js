@@ -75,7 +75,7 @@ function($stateProvider, $urlRouterProvider) {
 }]);
 
 function loadSession(){
-  if(sessionStorage.getItem('id') != null || sessionStorage.getItem('pseudo') != document.getElementById("getPseudo").innerHTML){
+  if(sessionStorage.getItem('id') != null){
     document.getElementById("getPseudo").innerHTML = sessionStorage.getItem('pseudo')+" ";
     document.getElementById("hideConnected").classList.add('ng-hide');
     document.getElementById("hideNotConnected").classList.remove('ng-hide');
