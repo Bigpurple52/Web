@@ -51,11 +51,23 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
 });
 
 router.delete('/userProfile/:id', function(req, res) {
-    //TO DO faudra aussi remove l'user dans les listes d'ami s'inspirer du delete d'ami
-    //users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
-    //    if (err) { return err; }
-    //        res.json(doc);
-    //});
+   /* var updatefriend = [];
+    users.findOneAndRemove({"_id": req.params.id}, function(err, doc) {
+        if (err) { return err; }
+        doc.friends.forEach(function(element, index, array){
+            users.findOne({"_id": element._id}, function(err, user){
+                updatefriend = [];
+                user.friends.forEach(function(friend, pos, list){
+                    if (friend._id != req.params.id){
+                        updatefriend.push({"_id": friend._id, "mail": friend.mail, "pseudo": friend.pseudo});
+                    }
+                });
+                users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, {new: true}, function(err, doc) {
+                });
+            });
+        });
+        res.json(doc);
+    });*/
 });
 
 router.put('/userProfile/:id', function(req, res) {
@@ -71,8 +83,8 @@ router.put('/userProfile/:id', function(req, res) {
         users.findOneAndUpdate({"_id" : id}, update, option, function(err, doc) {
         	if (err) { return err; }
             doc.friends.forEach(function(element, index, array){
-                updatefriend = [];
                 users.findOne({"_id": element._id}, function(err, user){
+                    updatefriend = [];
                     user.friends.forEach(function(friend, pos, list){
                         if (friend._id == id){
                             updatefriend.push({"_id": friend._id, "mail": req.body.mail, "pseudo": req.body.pseudo});
