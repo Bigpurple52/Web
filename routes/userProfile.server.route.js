@@ -66,15 +66,26 @@ router.put('/userProfile/:id', function(req, res) {
     //Update infos
     if(req.body.pseudo){
         var update = {"mail": req.body.mail, "pass": req.body.pass, "pseudo": req.body.pseudo};
+        var updatefriend = [];
 
         users.findOneAndUpdate({"_id" : id}, update, option, function(err, doc) {
         	if (err) { return err; }
+            doc.friends.forEach(function(element, index, array){
+                updatefriend = [];
+                users.findOne({"_id": element._id}, function(err, user){
+                    user.friends.forEach(function(friend, pos, list){
+                        if (friend._id == id){
+                            updatefriend.push({"_id": friend._id, "mail": req.body.mail, "pseudo": req.body.pseudo});
+                        }else{
+                            updatefriend.push({"_id": friend._id, "mail": friend.mail, "pseudo": friend.pseudo});
+                        }
+                    });
+                    users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, {new: true}, function(err, doc) {
+                    });
+                });
+            });
             res.json(doc);
         });
-        /*TO DO
-            Update sur la liste des amis des amis du l'user qui vient de changer
-            s'inpirer du delete !
-        */
     //add friend
     }else{
         var friend = {};
