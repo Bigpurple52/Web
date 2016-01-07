@@ -59,6 +59,16 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }      
     })
+    .state('userProfile/id/adduser', {
+      url: '/userProfile/:id/:adduser',
+      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
+      controller: 'UserProfileCtrl',
+      resolve: {
+        connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
+          return userProfile.getAll();
+        }]
+      }      
+    })
     .state('userProfile/id', {
       url: '/userProfile/:id',
       templateUrl: 'javascripts/userProfile/userProfile.client.view.html',

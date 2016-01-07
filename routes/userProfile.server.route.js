@@ -5,7 +5,7 @@ var users = mongoose.model('User');
 var groups = mongoose.model('Group');
 
 router.get('/userProfile/:id', function(req, res) {
-	users.find(function(err, doc) {
+	groups.find(function(err, doc) {
         if (err) {
             return (err);
         }
@@ -150,7 +150,7 @@ router.post('/userProfile/:id', function(req, res, next) {
     var group = new groups(req.body);
 
     var query = {
-        "name": req.body.groupName,
+        "name": req.body.name,
     };
 
     var currentUser = {
@@ -160,21 +160,86 @@ router.post('/userProfile/:id', function(req, res, next) {
 
     groups.find(query,function(err, doc) {
         if (err) {
-            return (err);
+            return err;
         }
         if(doc.length != 0){
-            res.send("erreur");
+            res.send("Nom de groupe déjà pris");
         }else{
             group.save(function(err, group) {
                 if (err) {
                     return next(err);
                 }
-                res.send("Groupe crée !");
+                res.send("Groupe créé !");
             });
         }
     });
+});
 
-    
+router.put('/userProfile/:id/:add', function(req, res, next) {
+    var groupName = req.body.name;
+    var friendMail = req.body.friendMail; 
+    var currentUser = {
+        "_id" : req.body.id,
+        "mail" : req.body.userMail,
+        "pseudo" : req.body.userPseudo
+    };
+    var option = {new: true};
+
+    if(friendMail == req.body.userMail){
+        res.send("Vous ne pouvez pas vous ajouter à ce groupe");
+    }else{
+        groups.findOne({"name" : groupName}, function(err, doc){
+            if (err) {return err;}
+            var isIn = false;
+            var friendIsIn = false;
+            if(doc != null){
+                users.findOne({"mail" : friendMail}, function(err, userFrien){
+                    if (err) {return err;}
+
+                    doc.users.forEach(function(element, index, array){
+                        if (element._id == currentUser._id){
+                            isIn = true;
+                        }
+                        if(userFrien != null){
+                            // Cette vérif' !!
+                            if(element._id == userFrien._id){
+                                friendIsIn = true;
+                            }
+                        }
+                    });
+                });
+                //Check if the current user is in the group (means allowed to add someone)
+                if(!isIn){
+                    //Check if the guy is already in the group
+                    if(!friendIsIn){
+                        users.findOne({"mail" : friendMail}, function(err, userFriend){
+                            if (err) {return err;}
+
+                            if(userFriend != null){
+                                var friend = {
+                                '_id' : userFriend._id,
+                                'pseudo' : userFriend.pseudo,
+                                };
+
+                                groups.findOneAndUpdate({"name" : groupName}, {$push: {"users": friend}}, option, function(err, data) {
+                                    if (err) { return err; }
+                                    res.send("Ami(e) ajouté(e)");
+                                });
+                            }else{
+                                res.send("Utilisateur inconnu");
+                            } 
+                        });
+                    }else{
+                        res.send("Utilisateur déjà dans le groupe.");
+                    }
+                }else{
+                    res.send("Vous ne pouvez pas ajouter quelqu'un dans un groupe dont vous ne faites pas parti.")
+                }
+            }else{
+                res.send("Groupe inexistant");
+            }
+        });
+    }  
 });
 
 module.exports = router;

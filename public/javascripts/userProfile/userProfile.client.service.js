@@ -46,5 +46,12 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         });
     };
 
+     o.addGroup = function(group) {
+        return $http.put('/userProfile/' + group.id +'/adduser', group).success(function(response) {
+            alert(response);
+            return response;
+        });
+    };
+
     return o;
 }]);

@@ -74,18 +74,42 @@
                 </a>
             </form>
 
-             <hr class="hrtrait"/>
+            <hr class="hrtrait"/>
             <h2> Créer un groupe :</h2>
             <form name="groupForm" role="form" novalidate>
                <div class="form-group" ng-class="{'has-error': groupForm.name.$invalid && groupForm.name.$dirty, 'has-success': groupForm.name.$valid}">
                     <label for="name">Nom du groupe:</label>
-                    <input type="text" class="form-control" name="name" placeholder="Email de votre ami(e)" ng-model="groupName" required ng-minlength="2" ng-maxlength="12">
+                    <input type="text" class="form-control" name="name" placeholder="Nom du groupe" ng-model="groupName" required ng-minlength="2" ng-maxlength="12">
                         <span class="error" ng-show="groupForm.name.$error.required && groupForm.name.$dirty">Ce champ doit être rempli</span>
                         <span class="error" ng-show="groupForm.name.$error.minlength">Nom trop court (Entre 2 et 12 caractères)</span>
                         <span class="error" ng-show="groupForm.name.$error.maxlength">Nom trop long (Entre 2 et 12 caractères)</span>
                     </input>
                 </div>
                 <button class="btn btn-primary" ng-click="createGroup()" ng-disabled="groupForm.$invalid">Créer</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
+            </form>
+
+            <hr class="hrtrait"/>
+            <h2> Ajouter une personne dans un groupe :</h2>
+            <form name="addGroupForm" role="form" novalidate>
+               <div class="form-group" ng-class="{'has-error': addGroupForm.name.$invalid && addGroupForm.name.$dirty, 'has-success': addGroupForm.name.$valid}">
+                    <label for="name">Nom du groupe:</label>
+                    <input type="text" class="form-control" name="name" placeholder="Nom du groupe" ng-model="groupName2" required ng-minlength="2" ng-maxlength="12">
+                        <span class="error" ng-show="addGroupForm.name.$error.required && addGroupForm.name.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="addGroupForm.name.$error.minlength">Nom trop court (Entre 2 et 12 caractères)</span>
+                        <span class="error" ng-show="addGroupForm.name.$error.maxlength">Nom trop long (Entre 2 et 12 caractères)</span>
+                    </input>
+                </div>
+                <div class="form-group" ng-class="{'has-error': addGroupForm.mail.$invalid && addGroupForm.mail.$dirty, 'has-success': addGroupForm.mail.$valid}">
+                    <label for="mail">Adresse mail de la personne à ajouter:</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Email de votre ami(e)" ng-model="friendMail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                        <span class="error" ng-show="addGroupForm.mail.$error.required && addGroupForm.mail.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="addGroupForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
+                    </input>
+                </div>
+                <button class="btn btn-primary" ng-click="addGroup()" ng-disabled="addGroupForm.$invalid">Ajouter</button>
                 <a href="#/home">
                     <button class="btn btn-warning">Annuler</button>
                 </a>

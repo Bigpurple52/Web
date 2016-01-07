@@ -70,6 +70,19 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
 
+        $scope.removeFriend = function() {
+            if (!$scope.unfriendMail) {
+                return;
+            }
+            userProfile.removeFriend({
+                id: sessionStorage.getItem('id'),
+                mail: $scope.unfriendMail
+            });   
+
+            $scope.unfriendMail = '';
+            document.location.href='#/userProfile/'+sessionStorage.getItem('id');
+        };
+
         $scope.createGroup = function() {
             if (!$scope.groupName) {
                 return;
@@ -83,16 +96,20 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
 
-        $scope.removeFriend = function() {
-            if (!$scope.unfriendMail) {
+        $scope.addGroup = function() {
+            if (!$scope.groupName2 && !$scope.friendMail) {
                 return;
             }
-            userProfile.removeFriend({
+            userProfile.addGroup({
+                name: $scope.groupName2,
+                friendMail: $scope.friendMail,
                 id: sessionStorage.getItem('id'),
-                mail: $scope.unfriendMail
+                userMail: sessionStorage.getItem('mail'),
+                userPseudo: sessionStorage.getItem('pseudo'),
             });   
 
-            $scope.unfriendMail = '';
+            $scope.groupName2 = '';
+            $scope.friendMail = '';
             document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
     }
