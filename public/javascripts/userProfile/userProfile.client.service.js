@@ -39,5 +39,12 @@ angular.module('userProfile').factory('userProfile', ['$http', function($http) {
         });
     };
 
+    o.createGroup = function(group) {
+        return $http.post('/userProfile/' + group.users._id, group).success(function(response) {
+            alert(response);
+            return response;
+        });
+    };
+
     return o;
 }]);

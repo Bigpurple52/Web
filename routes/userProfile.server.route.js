@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var users = mongoose.model('User');
+var groups = mongoose.model('Group');
 
 router.get('/userProfile/:id', function(req, res) {
 	users.find(function(err, doc) {
@@ -143,6 +144,37 @@ router.put('/userProfile/:id', function(req, res) {
             }
         })
     }
+});
+
+router.post('/userProfile/:id', function(req, res, next) {
+    var group = new groups(req.body);
+
+    var query = {
+        "name": req.body.groupName,
+    };
+
+    var currentUser = {
+        "id": req.body.userId,
+        "pseudo": req.body.userPseudo,
+    }
+
+    groups.find(query,function(err, doc) {
+        if (err) {
+            return (err);
+        }
+        if(doc.length != 0){
+            res.send("erreur");
+        }else{
+            group.save(function(err, group) {
+                if (err) {
+                    return next(err);
+                }
+                res.send("Groupe crée !");
+            });
+        }
+    });
+
+    
 });
 
 module.exports = router;

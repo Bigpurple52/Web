@@ -70,6 +70,19 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             document.location.href='#/userProfile/'+sessionStorage.getItem('id');
         };
 
+        $scope.createGroup = function() {
+            if (!$scope.groupName) {
+                return;
+            }
+            userProfile.createGroup({
+                name: $scope.groupName,
+                users: {'_id' : sessionStorage.getItem('id'), 'pseudo': sessionStorage.getItem('pseudo')},
+            });   
+
+            $scope.groupName = '';
+            document.location.href='#/userProfile/'+sessionStorage.getItem('id');
+        };
+
         $scope.removeFriend = function() {
             if (!$scope.unfriendMail) {
                 return;
