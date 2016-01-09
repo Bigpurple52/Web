@@ -190,7 +190,9 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
             if(doc != null){
                 users.findOne({"mail" : friendMail}, function(err, userFriend){
                     if (err) {return err;}
+                    insertInlist(userFriend,checkInList(doc, currentUser._id,userFriend));
                 });     
+                    var checkInList = function(doc, id, friend){                    
                         doc.users.forEach(function(element, index, array){
                             if (element._id == id){
                                 isIn = true;
