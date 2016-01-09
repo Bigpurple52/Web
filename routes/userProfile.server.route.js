@@ -220,6 +220,9 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
                                     groups.findOneAndUpdate({"name" : groupName}, {$push: {"users": friend}}, option, function(err, data) {
                                         if (err) { return err; }
                                         res.send("Ami(e) ajouté(e)");
+                                        data.users.forEach(function(element, index, array){
+                                            addRelationship(element, friend);
+                                        });
                                     });
                                 }else{
                                     res.send("Utilisateur inconnu");
@@ -236,6 +239,26 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
             }
         });
     }  
+    var addRelationship = function (element, friend) {
+        if (element.mail != friend.mail){
+            var isfriend = false;
+            users.findOne({"mail" : friend.mail}, function(err, userFriend){
+                userFriend.friends.forEach(function(ami, index, array){
+                    if(ami.mail == element.mail){
+                        isfriend = true;
+                    }
+                });
+                if(!isfriend){
+                    users.findOneAndUpdate({"_id" : friend._id}, {$push: {"friends": element}}, option, function(err, doc) {
+                        if (err) { return err; }
+                        users.findOneAndUpdate({"_id" : element._id}, {$push: {"friends": friend}}, option, function(err, doc) {
+                            if (err) { return err; }
+                        });
+                    });
+                }
+            });
+        }
+    }
 });
 
 module.exports = router;
