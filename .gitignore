@@ -47,4 +47,6 @@ Temporary Items
 .apdisk
 node_modules/*
 Projet.pdf
+public/lib/*
+public/stylesheets/*
 npm-debug.log
