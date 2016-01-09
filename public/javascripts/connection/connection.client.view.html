@@ -1,0 +1,36 @@
+<section>
+    <h1 class="page-header">Connexion</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <form name="registerForm" role="form" novalidate>
+                <div class="form-group" ng-show="!validation">
+                    <span class="alert alert-danger">Les identifiants indiqués sont incorrects !</span>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registerForm.mail.$invalid && registerForm.mail.$dirty}">
+            	    <label for="mail">Adresse mail:</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Email" ng-model="mail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                        <span class="error" ng-show="registerForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
+                    </input>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registerForm.pass.$invalid && registerForm.pass.$dirty}">
+                    <label for="pass">Mot de passe:</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Votre mot de passe" ng-model="pass" required ng-minlength="4" ng-maxlength="12">
+                        <span class="error" ng-show="registerForm.pass.$error.minlength">Mot de passe trop court (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="registerForm.pass.$error.maxlength">Mot de passe trop long (Entre 4 et 12 caractères)</span>
+                    </input>
+                </div>
+                <button class="btn btn-primary" ng-click="connection()" ng-disabled="registerForm.$invalid">Connexion</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
+                <hr>
+                <a href="#/register">
+                    <button class="btn btn-info">Inscription</button>
+                </a>
+            </form>
+        </div>
+        <!-- /.col-lg-6 (nested) -->
+    </div>
+    <!-- /.row (nested) -->
+</section>
+

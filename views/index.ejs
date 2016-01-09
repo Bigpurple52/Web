@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Environnement de developpement</title>
+    <title>who's enjoyed buddy !</title>
 
 
     <!-- Bootstrap Core CSS -->
@@ -26,6 +26,11 @@
     <!-- Custom Fonts -->
     <link href="/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- Our Custom CSS -->
+    <link href="/stylesheets/style.css" rel="stylesheet">
+
+    <link href='http://fonts.googleapis.com/css?family=Arizonia' rel='stylesheet' type='text/css'>
+
     <style>
         .glyphicon-thumbs-up {
             cursor: pointer
@@ -33,8 +38,7 @@
     </style>
 </head>
 
-<body>
-
+<body onload="loadSession()">
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -46,23 +50,21 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#/home">Gestion des projets</a>
+                <a href="#/home" class="navbar-brand">WEB</a>
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
+            <ul id="hideNotConnected" class="nav navbar-top-links navbar-right" ng-hide='true'>
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                        <i class="fa fa-user fa-fw"></i><span id="getPseudo"></span><i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        <li><a href="" onclick="userProfile()"><i class="fa fa-user fa-fw"></i>User Profile</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="#/connection" onclick="deleteSession()"><i class="fa fa-sign-out fa-fw"></i>Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -71,13 +73,33 @@
             </ul>
             <!-- /.navbar-top-links -->
 
+            <ul id="hideConnected" class="nav navbar-top-links navbar-right" ng-hide='false'>
+                <li>
+                    <a href="#/register"><i class="fa fa-edit fa-fw"></i>register</a>
+                </li>
+                <li>
+                    <a href="#/connection"><i class="fa fa-edit fa-fw"></i>connexion</a>
+                </li>
+            </ul>
+
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href="#/home.html"><i class="fa fa-edit fa-fw"></i>Backlogs</a>
+                            <a href="#/home"><i class="fa fa-edit fa-fw"></i>Home</a>
                         </li>
-
+                        <li>
+                            <a href="#/register"><i class="fa fa-edit fa-fw"></i>register</a>
+                        </li>
+                        <li>
+                            <a href="#/connection"><i class="fa fa-edit fa-fw"></i>connexion</a>
+                        </li>
+                        <li>
+                            <a href="#" onclick="deleteSession()"><i class="fa fa-edit fa-fw"></i>session delete</a>
+                        </li>
+                        <li>
+                            <a href="" onclick="userProfile()"><i class="fa fa-edit fa-fw"></i>user</a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -119,10 +141,22 @@
 <script src="/stylesheets/dist/js/sb-admin-2.js"></script>
 
 <script src="/javascripts/home/home.client.module.js"></script>
-<script src="/javascripts/home/controllers/home.client.controller.js"></script>
-<script src="/javascripts/home/services/home.client.service.js"></script>
+<script src="/javascripts/home/home.client.controller.js"></script>
+<script src="/javascripts/home/home.client.service.js"></script>
+
+<script src="/javascripts/register/register.client.module.js"></script>
+<script src="/javascripts/register/register.client.controller.js"></script>
+<script src="/javascripts/register/register.client.service.js"></script>
+
+<script src="/javascripts/connection/connection.client.module.js"></script>
+<script src="/javascripts/connection/connection.client.controller.js"></script>
+<script src="/javascripts/connection/connection.client.service.js"></script>
+
+<script src="/javascripts/userProfile/userProfile.client.module.js"></script>
+<script src="/javascripts/userProfile/userProfile.client.controller.js"></script>
+<script src="/javascripts/userProfile/userProfile.client.service.js"></script>
+
 
 <script src="/javascripts/application.js"></script>
-
 
 </html>

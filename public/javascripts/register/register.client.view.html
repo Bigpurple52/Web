@@ -1,0 +1,50 @@
+<section>
+<h1 class="page-header">Inscription</h1>
+    <div class="row">
+        <div class="col-lg-6">
+            <form name="registerForm" role="form" novalidate>
+                <div class="form-group" ng-class="{'has-error': registerForm.mail.$invalid && registerForm.mail.$dirty, 'has-success': registerForm.mail.$valid}">
+                	<label for="mail">Adresse mail:*</label>
+                    <input type="email" class="form-control" name="mail" placeholder="Email" ng-model="mail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                      <span class="error" ng-show="registerForm.mail.$error.required && registerForm.mail.$dirty">Ce champ doit être rempli</span>
+                      <span class="error" ng-show="registerForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
+                    </input>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registerForm.pass.$invalid && registerForm.pass.$dirty, 'has-success': registerForm.pass.$valid}">
+                    <label for="pass">Mot de passe:*</label>
+                    <input type="password" class="form-control" name="pass" placeholder="Votre mot de passe" ng-model="pass" required ng-minlength="4" ng-maxlength="12">
+                        <span class="error" ng-show="registerForm.pass.$error.required && registerForm.pass.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="registerForm.pass.$error.minlength">Mot de passe trop court (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="registerForm.pass.$error.maxlength">Mot de passe trop long (Entre 4 et 12 caractères)</span>
+                    </input>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registerForm.pass2.$invalid && registerForm.pass2.$dirty, 'has-success': registerForm.pass2.$valid}">
+                    <label for="pass2">Mot de passe:*</label>
+                    <input type="password" class="form-control" name="pass2" placeholder="Re-tapez votre mot de passe" ng-model="pass2" required ng-minlength="4" ng-maxlength="12" ng-pattern="{{pass}}">
+                        <span class="error" ng-show="registerForm.pass2.$error.required && registerForm.pass2.$dirty">Ce champ doit être rempli</span>
+                        <span class="error has-error" ng-show="registerForm.pass2.$error.minlength">Mot de passe trop court (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="registerForm.pass2.$error.maxlength">Mot de passe trop long (Entre 4 et 12 caractères)</span>
+                        <span class="error" ng-show="registerForm.pass2.$error.pattern">Mots de passe différents</span>
+                    </input>
+                </div>
+                <div class="form-group" ng-class="{'has-error': registerForm.pseudo.$invalid && registerForm.pseudo.$dirty, 'has-success': registerForm.pseudo.$valid}">
+                    <label for="pseudo">Pseudonyme:*</label>
+                    <input type="text" class="form-control" name="pseudo" placeholder="Votre pseudonyme" ng-model="pseudo" required ng-minlength="2" ng-maxlength="12">
+                        <span class="error" ng-show="registerForm.pseudo.$error.required && registerForm.pseudo.$dirty">Ce champ doit être rempli</span>
+                        <span class="error" ng-show="registerForm.pseudo.$error.minlength">Pseudonyme trop court (Entre 2 et 12 caractères)</span>
+                        <span class="error" ng-show="registerForm.pseudo.$error.maxlength">Pseudonyme trop long (Entre 2 et 12 caractères)</span>
+                    </input>
+                </div>
+                <div class="form-group">
+                    <span>* = Ces champs sont obligatoires</span>
+                </div>
+                <button class="btn btn-primary" ng-click="addUser()" ng-disabled="registerForm.$invalid">Ajouter</button>
+                <a href="#/home">
+                    <button class="btn btn-warning">Annuler</button>
+                </a>
+            </form>
+        </div>
+        <!-- /.col-lg-6 (nested) -->
+    </div>
+    <!-- /.row (nested) -->
+</section>
