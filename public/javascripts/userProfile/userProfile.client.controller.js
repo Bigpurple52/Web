@@ -89,7 +89,7 @@ angular.module('userProfile').controller('UserProfileCtrl', [
             }
             userProfile.createGroup({
                 name: $scope.groupName,
-                users: {'_id' : sessionStorage.getItem('id'), 'pseudo': sessionStorage.getItem('pseudo')},
+                users: {'_id' : sessionStorage.getItem('id'), 'pseudo': sessionStorage.getItem('pseudo'), 'mail': sessionStorage.getItem('mail')},
             });   
 
             $scope.groupName = '';

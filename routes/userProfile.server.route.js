@@ -153,11 +153,6 @@ router.post('/userProfile/:id', function(req, res, next) {
         "name": req.body.name,
     };
 
-    var currentUser = {
-        "id": req.body.userId,
-        "pseudo": req.body.userPseudo,
-    }
-
     groups.find(query,function(err, doc) {
         if (err) {
             return err;
@@ -193,48 +188,47 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
             var isIn = false;
             var friendIsIn = false;
             if(doc != null){
-                users.findOne({"mail" : friendMail}, function(err, userFrien){
+                users.findOne({"mail" : friendMail}, function(err, userFriend){
                     if (err) {return err;}
-
-                    doc.users.forEach(function(element, index, array){
-                        if (element._id == currentUser._id){
-                            isIn = true;
-                        }
-                        if(userFrien != null){
-                            // Cette vérif' !!
-                            if(element._id == userFrien._id){
-                                friendIsIn = true;
+                });     
+                        doc.users.forEach(function(element, index, array){
+                            if (element._id == id){
+                                isIn = true;
                             }
-                        }
-                    });
-                });
-                //Check if the current user is in the group (means allowed to add someone)
-                if(!isIn){
-                    //Check if the guy is already in the group
-                    if(!friendIsIn){
-                        users.findOne({"mail" : friendMail}, function(err, userFriend){
-                            if (err) {return err;}
-
-                            if(userFriend != null){
-                                var friend = {
-                                '_id' : userFriend._id,
-                                'pseudo' : userFriend.pseudo,
-                                };
-
-                                groups.findOneAndUpdate({"name" : groupName}, {$push: {"users": friend}}, option, function(err, data) {
-                                    if (err) { return err; }
-                                    res.send("Ami(e) ajouté(e)");
-                                });
-                            }else{
-                                res.send("Utilisateur inconnu");
-                            } 
+                            if(friend != null){
+                                if(element.mail == friend.mail){
+                                    friendIsIn = true;
+                                }
+                            }
                         });
-                    }else{
-                        res.send("Utilisateur déjà dans le groupe.");
                     }
-                }else{
-                    res.send("Vous ne pouvez pas ajouter quelqu'un dans un groupe dont vous ne faites pas parti.")
-                }
+
+                    var insertInlist = function(friends){
+                        //Check if the current user is in the group (means allowed to add someone)
+                        if(isIn){
+                            //Check if the guy is already in the group
+                            if(!friendIsIn){              
+                                if(friends != null){
+                                    var friend = {
+                                    '_id' : friends._id,
+                                    'pseudo' : friends.pseudo,
+                                    'mail': friends.mail,
+                                    };
+
+                                    groups.findOneAndUpdate({"name" : groupName}, {$push: {"users": friend}}, option, function(err, data) {
+                                        if (err) { return err; }
+                                        res.send("Ami(e) ajouté(e)");
+                                    });
+                                }else{
+                                    res.send("Utilisateur inconnu");
+                                } 
+                            }else{
+                                res.send("Utilisateur déjà dans le groupe.");
+                            }
+                        }else{
+                            res.send("Vous ne pouvez pas ajouter quelqu'un dans un groupe dont vous ne faites pas parti.")
+                        }
+                    }                 
             }else{
                 res.send("Groupe inexistant");
             }
