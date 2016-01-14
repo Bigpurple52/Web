@@ -5,10 +5,8 @@ var users = mongoose.model('User');
 var groups = mongoose.model('Group');
 
 router.get('/userProfile/:id', function(req, res) {
-	groups.find(function(err, doc) {
-        if (err) {
-            return (err);
-        }
+	users.find(function(err, doc) {
+        if (err) { return (err); }
         res.json(doc);
     });
 });

@@ -1,12 +1,12 @@
 //Service
 angular.module('home').factory('home', ['$http', function($http) {
     var o = {
-        users : []
+        groups : []
     };
 
     o.getAll = function() {
         return $http.get('/home').success(function(data) {
-            angular.copy(data, o.users);
+            angular.copy(data, o.groups);
         });
     };
 
