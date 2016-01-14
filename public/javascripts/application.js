@@ -11,8 +11,7 @@ function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'javascripts/home/home.client.view.html',
-      controller: 'HomeCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/home/home.client.view.html', controller: 'HomeCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
       resolve: {
         homePromise: ['home', function(home){
           return home.getAll();
@@ -21,8 +20,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('register', {
       url: '/register',
-      templateUrl: 'javascripts/register/register.client.view.html',
-      controller: 'RegisterCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/register/register.client.view.html', controller: 'RegisterCtrl'}},
       resolve: {
         registerPromise: ['register', function(register){
           return register.getAll();
@@ -31,8 +29,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('connection/q', {
       url: '/connection/:q',
-      templateUrl: 'javascripts/connection/connection.client.view.html',
-      controller: 'ConnectionCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/connection/connection.client.view.html', controller: 'ConnectionCtrl'}},
       resolve: {
         connectionPromise: ['connection', function(connection){
           return connection.getAll();
@@ -41,8 +38,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('connection', {
       url: '/connection',
-      templateUrl: 'javascripts/connection/connection.client.view.html',
-      controller: 'ConnectionCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/connection/connection.client.view.html', controller: 'ConnectionCtrl'}},
       resolve: {
         connectionPromise: ['connection', function(connection){
           return connection.getAll();
@@ -51,8 +47,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/mail', {
       url: '/userProfile/:id/:mail',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -61,8 +56,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/adduser', {
       url: '/userProfile/:id/:adduser',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -71,8 +65,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id', {
       url: '/userProfile/:id',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -81,8 +74,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('group', {
       url: '/group',
-      templateUrl: 'javascripts/group/group.client.view.html',
-      controller: 'GroupCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
       resolve: {
         groupPromise: ['group', function(group){
           return group.getAll();
@@ -91,8 +83,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('friend', {
       url: '/friend',
-      templateUrl: 'javascripts/friend/friend.client.view.html',
-      controller: 'FriendCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},    
       resolve: {
         groupPromise: ['friend', function(friend){
           return friend.getAll();

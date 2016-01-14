@@ -81,66 +81,21 @@
                     <a href="#/connection"><i class="fa fa-edit fa-fw"></i>connexion</a>
                 </li>
             </ul>
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul id="hideNotConnectedNav" class="nav" id="side-menu" ng-controlleur="friendsCtrl">
-
-                        <!-- Display the list of the current user's friends -->
-                        <ul class="nav" id="side-menu" ng-repeat="friend in friends">
-                            <li>
-                               {{friend.pseudo}}
-                            </li>
-                        </ul>
-
-                        <!-- Add a friend form -->
-                        <form name="friendForm" role="form" novalidate>
-                            <div class="form-group" ng-class="{'has-error': friendForm.mail.$invalid && friendForm.mail.$dirty, 'has-success': friendForm.mail.$valid}">
-                                <input type="email" class="form-control" name="mail" placeholder="Email de votre ami(e)" ng-model="friendMail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
-                                    <span class="error" ng-show="friendForm.mail.$error.required && friendForm.mail.$dirty">Ce champ doit être rempli</span>
-                                    <span class="error" ng-show="friendForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
-                                </input>
-                                <button class="btn btn-primary" ng-click="addFriend()" ng-disabled="friendForm.$invalid">Ajouter un ami</button>
-                            </div>
-                        </form>
-
-                        <!-- Display the list of the current user's groups -->
-                        <ul class="nav" id="side-menu" ng-repeat="group in groups" ng-controlleur="groupsCtrl">
-                            <li>
-                                {{group.name}}
-                            </li>
-                        </ul>
-
-                        <!-- Create a group -->
-                        <form name="groupForm" role="form" novalidate>
-                            <div class="form-group" ng-class="{'has-error': groupForm.name.$invalid && groupForm.name.$dirty, 'has-success': groupForm.name.$valid}">
-                                <input type="text" class="form-control" name="name" placeholder="Nom du groupe" ng-model="groupName" required ng-minlength="2" ng-maxlength="12">
-                                    <span class="error" ng-show="groupForm.name.$error.required && groupForm.name.$dirty">Ce champ doit être rempli</span>
-                                    <span class="error" ng-show="groupForm.name.$error.minlength">Nom trop court (Entre 2 et 12 caractères)</span>
-                                    <span class="error" ng-show="groupForm.name.$error.maxlength">Nom trop long (Entre 2 et 12 caractères)</span>
-                                </input>
-                                <button class="btn btn-primary" ng-click="createGroup()" ng-disabled="groupForm.$invalid">Créer un groupe</button>
-                            </div>
-                        </form>
-
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
         </nav>
 
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <div ui-view="side_menu"></div>
+            </div>
+        </div>
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <ui-view></ui-view>
+                    <div ui-view="wrapper_page"></div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
 
-            <section ng-view> </section>
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
