@@ -8,7 +8,7 @@
                 </div>
                 <div class="form-group" ng-class="{'has-error': registerForm.mail.$invalid && registerForm.mail.$dirty}">
             	    <label for="mail">Adresse mail:</label>
-                    <input type="email" class="form-control" name="mail" placeholder="Email" ng-model="mail" required ng-pattern="/^[a-zA-Z._-]+@[a-zA-Z]*.[a-z]{2,4}$/">
+                    <input type="email" class="form-control" name="mail" placeholder="Email" ng-model="mail" required ng-pattern="/^[a-zA-Z._-0-9]+@[a-zA-Z]*.[a-z]{2,4}$/">
                         <span class="error" ng-show="registerForm.mail.$error.pattern">Format de l'adresse mail incorrect</span>
                     </input>
                 </div>
