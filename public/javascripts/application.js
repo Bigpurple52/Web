@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group','friend']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -86,6 +86,16 @@ function($stateProvider, $urlRouterProvider) {
       resolve: {
         groupPromise: ['group', function(group){
           return group.getAll();
+        }]
+      }     
+    })
+    .state('friend', {
+      url: '/friend',
+      templateUrl: 'javascripts/friend/friend.client.view.html',
+      controller: 'FriendCtrl',
+      resolve: {
+        groupPromise: ['friend', function(friend){
+          return friend.getAll();
         }]
       }     
     })
