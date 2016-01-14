@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -13,11 +13,11 @@ function($stateProvider, $urlRouterProvider) {
       url: '/home',
       templateUrl: 'javascripts/home/home.client.view.html',
       controller: 'HomeCtrl',
-  	  resolve: {
-    		homePromise: ['home', function(home){
+      resolve: {
+        homePromise: ['home', function(home){
           return home.getAll();
-    		}]
-  	  }
+        }]
+      }
     })
     .state('register', {
       url: '/register',
@@ -79,7 +79,16 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }      
     })
-
+    .state('group', {
+      url: '/group',
+      templateUrl: 'javascripts/group/group.client.view.html',
+      controller: 'GroupCtrl',
+      resolve: {
+        groupPromise: ['group', function(group){
+          return group.getAll();
+        }]
+      }     
+    })
     // redirect unspecified routes
     $urlRouterProvider.otherwise('home');
 }]);
