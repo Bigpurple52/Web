@@ -91,7 +91,22 @@ router.put('/userProfile/:id', function(req, res) {
                             updatefriend.push({"_id": friend._id, "mail": friend.mail, "pseudo": friend.pseudo});
                         }
                     });
-                    users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, {new: true}, function(err, doc) {
+                    users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, option, function(err, doc) {
+                    });
+                });
+            });
+            groups.find(function(err, groupsresult) {
+                if (err) { return (err); }
+                groupsresult.forEach(function(element1, index1, array1){
+                    membersgroup = [];
+                    element1.users.forEach(function(element2, index2, array2){
+                        if(element2._id == id){
+                            membersgroup.push({"_id" : element2._id, "pseudo": req.body.pseudo, "mail": req.body.mail});
+                        }else{
+                            membersgroup.push({"_id": element2._id, "pseudo": element2.pseud, "mail": element2.mail});
+                        }
+                    });
+                    groups.findOneAndUpdate({"_id" : element1._id}, {$set: {"users" : membersgroup}}, option, function(err, doc){
                     });
                 });
             });
