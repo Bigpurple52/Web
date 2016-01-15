@@ -1,6 +1,6 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group','friend']);
+var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group','friend','side_menu']);
 
 //Setup a state called home
 mainApplicationModule.config([
@@ -11,7 +11,8 @@ function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      views : {wrapper_page : {templateUrl: 'javascripts/home/home.client.view.html', controller: 'HomeCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
+      views : {wrapper_page : {templateUrl: 'javascripts/home/home.client.view.html', controller: 'HomeCtrl'},
+      side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         homePromise: ['home', function(home){
           return home.getAll();
@@ -47,7 +48,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/mail', {
       url: '/userProfile/:id/:mail',
-      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -56,7 +58,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/adduser', {
       url: '/userProfile/:id/:adduser',
-      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+            side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -65,7 +68,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id', {
       url: '/userProfile/:id',
-      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -74,7 +78,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('group', {
       url: '/group',
-      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},
+      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         groupPromise: ['group', function(group){
           return group.getAll();
@@ -83,7 +88,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('friend', {
       url: '/friend',
-      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},side_menu : {templateUrl: 'javascripts/getAllGroupes.html'}},    
+      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
       resolve: {
         groupPromise: ['friend', function(friend){
           return friend.getAll();

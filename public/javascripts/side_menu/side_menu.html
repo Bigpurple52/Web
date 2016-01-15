@@ -1,0 +1,27 @@
+                        <div data-ng-init="init()">
+                        <!-- Display the list of the current user's friends -->
+                        
+                        Friends:
+                        <ul class="nav" id="side-menu" ng-repeat="friend in listFriends">
+                            <li>
+                               {{friend.pseudo}}
+                            </li>
+                        </ul>
+
+                        <!-- Add a friend form -->
+                        <button class="btn btn-primary">Ajouter un ami</button>
+                            
+
+                        <!-- Display the list of the current user's groups -->
+                        <br>
+                        Groups: 
+                        <ul class="nav" id="side-menu" ng-repeat="group in listGroups">
+                            <li>
+                                {{group.name}}
+                            </li>
+                        </ul>
+
+                        <!-- Create a group -->
+                        <button class="btn btn-primary">Créer un groupe</button>
+                         
+                        </div>
