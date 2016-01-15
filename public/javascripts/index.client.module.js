@@ -3,12 +3,10 @@ function loadSession(){
     document.getElementById("getPseudo").innerHTML = sessionStorage.getItem('pseudo')+" ";
     document.getElementById("hideConnected").classList.add('ng-hide');
     document.getElementById("hideNotConnected").classList.remove('ng-hide');
-    document.getElementById("hideNotConnectedNav").classList.remove('ng-hide');
   }else if(document.location.href!="http://localhost:3000/#/register"){
     document.location.href = "http://localhost:3000/#/connection";
     document.getElementById("hideConnected").classList.remove('ng-hide');
     document.getElementById("hideNotConnected").classList.add('ng-hide');
-    document.getElementById("hideNotConnectedNav").classList.add('ng-hide');
   }
 };
 
@@ -20,12 +18,4 @@ function deleteSession(){
   sessionStorage.clear();
   alert('Deconnexion réussie !');
   document.location.href = "/"
-}
-
-function getFriends(){
-	$scope.groups = {"name" : "test"};
-}
-
-function getGroups(href){
-
 }
