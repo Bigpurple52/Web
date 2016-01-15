@@ -17,7 +17,7 @@ router.get('/side_menu/friends/:mail', function(req, res) {
 
 router.get('/side_menu/groups/:mail', function(req, res) {
 	//console.log("in /side_menu/groups/:id"+ req.params.mail);
-	DBgroups.find({"users.mail": req.params.mail},function(err,data){
+	DBgroups.find({"users.mail": req.params.mail, "type": "GROUP"},function(err,data){
 		if (err) { return (err); }
 			//console.log(data);
 			res.json(data);
