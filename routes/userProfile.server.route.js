@@ -143,7 +143,14 @@ router.put('/userProfile/:id', function(req, res) {
                             if (err) { return err; }
                             users.findOneAndUpdate({"_id" : friend._id}, {$push: {"friends": currentUser}}, option, function(err, doc) {
                                 if (err) { return err; }
-                                res.send("Ami(e) ajouté(e)");
+                                    var group = new groups({'type' : "FRIEND", 'name' : ""+friend._id+currentUser._id, "users" : [friend, currentUser]});
+                                    group.save(function(err, group) {
+                                    if (err) {
+                                        return next(err);
+                                    }
+                                 res.send("Ami(e) ajouté(e)");   
+                            });
+
                             });
                         });
                     }else{
