@@ -41,21 +41,12 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
                         });
 
                         //supression du groupe FRIEND avec les deux utilisateurs
-                        /*console.log("userProfile.server.route.js:                 avant la suppression du groupe");
                         users.findOne({"_id" : currentUser._id}, function(err, user1) {
-                            console.log("userProfile.server.route.js:                 user un trouvé");
-                            users.findOneAndUpdate({"_id" : doc._id}, function(err, user2) {
-                                var query = {
-                                    "users": [user1, user2]
-                                };
-                                console.log("userProfile.server.route.js:                 pendant");
-                                console.log("utilisateur 1 : " + user1.mail);
-                                console.log("utilisateur 2 : " + user2.mail);
-                                //groups.findOneAndRemove({"users.mail": user1.mail, "users.mail": user2.mail, "type": "FRIEND"}, function(err, doc) {});
+                            users.findOne({"_id" : doc._id}, function(err, user2) {
+                                groups.findOneAndRemove({"users.mail": user1.mail, "users.mail": user2.mail, "type": "FRIEND"}, function(err, doc) {});
                             });
                         });
-                        console.log("userProfile.server.route.js:                 après la suppression du groupe");
-                        */
+
                         res.send("Utilisateur retiré de votre liste d'ami");
                     }else{
                         res.send("L'utilisateur n'est pas votre ami");
