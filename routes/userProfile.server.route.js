@@ -24,19 +24,38 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
                 if(size == 0){
                     res.send("Vous n'avez pas d'ami");
                 }else{
-                    //Search the friend in your friends list
+                    // recherche l'ami à supprimer dans la liste d'amis
                     newfriendUser = currentUser.friends.filter(function(element){
                         return (element.mail != req.params.mail);
                     })
                     if(size != newfriendUser.length){
+                        //mise à jour de la liste d'amis de l'utilisateur en cours
                         users.findOneAndUpdate({"_id" : currentUser._id}, {$set: {"friends": newfriendUser}}, {new: true}, function(err, doc) {
                         });
 
                         newfriend = doc.friends.filter(function(element){
                             return (element.mail != currentUser.mail);
                         })
+                        // mise à jour de la liste d'amis de l'amis à supprimer
                         users.findOneAndUpdate({"_id" : doc._id}, {$set: {"friends": newfriend}}, {new: true}, function(err, doc) {
                         });
+
+                        //supression du groupe FRIEND avec les deux utilisateurs
+                        /*console.log("userProfile.server.route.js:                 avant la suppression du groupe");
+                        users.findOne({"_id" : currentUser._id}, function(err, user1) {
+                            console.log("userProfile.server.route.js:                 user un trouvé");
+                            users.findOneAndUpdate({"_id" : doc._id}, function(err, user2) {
+                                var query = {
+                                    "users": [user1, user2]
+                                };
+                                console.log("userProfile.server.route.js:                 pendant");
+                                console.log("utilisateur 1 : " + user1.mail);
+                                console.log("utilisateur 2 : " + user2.mail);
+                                //groups.findOneAndRemove({"users.mail": user1.mail, "users.mail": user2.mail, "type": "FRIEND"}, function(err, doc) {});
+                            });
+                        });
+                        console.log("userProfile.server.route.js:                 après la suppression du groupe");
+                        */
                         res.send("Utilisateur retiré de votre liste d'ami");
                     }else{
                         res.send("L'utilisateur n'est pas votre ami");
