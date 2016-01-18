@@ -1,3 +1,62 @@
 <section >
     <h1 class="page-header"> Group:{{group.name}} ,{{group._id}}</h1>
+
+    <button class="btn" ng-click="bill = true">Create a bill</button>
+    <div id="v" ng-show='bill'>
+		<form name="newBillForm" role="form" novalidate>
+
+	    	<div class="form-group" ng-class="{'has-error': newBillForm.description.$invalid && newBillForm.description.$dirty, 'has-success': newBillForm.description.$valid}">
+	            <label for="description">Description:</label>
+	            <input type="text" class="form-control" name="description" placeholder="Description" ng-model="description" required ng-minlength="2" ng-maxlength="12">
+	                <span class="error" ng-show="newBillForm.description.$error.required && newBillForm.description.$dirty">Ce champ doit être rempli</span>
+	                <span class="error" ng-show="newBillForm.description.$error.minlength">Pseudonyme trop court (Entre 2 et 12 caractères)</span>
+	                <span class="error" ng-show="newBillForm.description.$error.maxlength">Pseudonyme trop long (Entre 2 et 12 caractères)</span>
+	            </input>
+	        </div>
+	    	<div class="form-group" ng-class="{'has-error': newBillForm.montant.$invalid && newBillForm.montant.$dirty, 'has-success': newBillForm.montant.$valid}">
+	            <label for="montant">Montant:</label>
+	            <input type="number" class="form-control" name="montant" placeholder="Montant" ng-model="montant" required ng-maxlength="12">
+	                <span class="error" ng-show="newBillForm.montant.$error.required && newBillForm.montant.$dirty">Ce champ doit être rempli</span>
+	                <span class="error" ng-show="newBillForm.montant.$error.minlength">Pseudonyme trop court (Entre 2 et 12 caractères)</span>
+	                <span class="error" ng-show="newBillForm.montant.$error.maxlength">Pseudonyme trop long (Entre 2 et 12 caractères)</span>
+	            </input>
+	        </div>
+	    	<div class="form-group" ng-class="{'has-error': newBillForm.buyer.$invalid && newBillForm.buyer.$dirty, 'has-success': newBillForm.buyer.$valid}">
+	            <label for="buyer">Celui qui paye: </label>
+	            <select >
+			        <option ng-repeat="users in group.users" value="{{users._id}}">{{users.pseudo}}</option>
+	            </select>
+	        </div>
+		    <div class="form-group" ng-class="{'has-error': newBillForm.pseudo.$invalid && newBillForm.users.$dirty, 'has-success': newBillForm.users.$valid}">
+		        <label for="users">Ceux qui sont inclus: </label>
+		       <div ng-app="checkbox" >
+				    <div ng-repeat="users in group.users">
+				        <input type="checkbox" checkbox-group />
+				        <label>{{users.pseudo}}</label>
+				    </div>
+				</div>
+		    </div>
+		    <button class="btn btn-primary" ng-click="updateUser(); bill = false" ng-disabled="newBillForm.$invalid">Editer</button>
+		    <button class="btn btn-warning" ng-click="bill = false">Annuler</button>
+		</form>
+	</div>
+	<div id="divDashboardGroup" ng-hide='bill'>
+		blablabla
+		blabla
+		bla
+		blabla
+		blablabla
+		blabla
+		bla
+		blabla
+		blablabla
+		blabla
+		bla
+		blabla
+		blablabla
+		blabla
+		bla
+		blabla
+		blablabla
+	</div>
 </section>
