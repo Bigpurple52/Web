@@ -5,7 +5,13 @@ angular.module('friend').factory('friend', ['$http', function($http) {
     };
 
     o.getAll = function() {
-        return $http.get('/friend').success(function(data) {
+        return $http.get('/friend/').success(function(data) {
+            angular.copy(data, o.users);
+        });
+    };
+
+    o.getOne = function(id) {
+        return $http.get('/friend/'+ id).success(function(data) {
             angular.copy(data, o.users);
         });
     };

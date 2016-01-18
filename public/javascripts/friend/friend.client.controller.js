@@ -2,8 +2,7 @@
 angular.module('friend').controller('FriendCtrl', [
     '$scope',
     'friend',
-    function($scope, friend) {
-        $scope.friend = friend.friend;
-
+	function($scope, group) {
+        $scope.group = group.group;
     }
 ]);

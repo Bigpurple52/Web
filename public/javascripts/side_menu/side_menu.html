@@ -2,9 +2,11 @@
                         <!-- Display the list of the current user's friends -->
                         
                         Friends:
-                        <ul class="nav" id="side-menu" ng-repeat="friend in listFriends">
-                            <li>
-                               {{friend.pseudo}}
+                        <ul class="nav" id="side-menu" ng-repeat="friendGroupe in listFriends">
+                            <li ng-repeat="user in friendGroupe.users">
+                                <div ng-if="!isMe(user._id)" >
+                                    <a ng-href="#/friend/{{friendGroupe._id}}" >{{user.pseudo}}</a>
+                                </div>
                             </li>
                         </ul>
 

@@ -24,5 +24,13 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 			$scope.listFriends = data;
 			});
 		}
+
+		$scope.isMe=function(id){
+			var isMe=false;
+			if(id==sessionStorage.getItem('id')){
+				isMe = true;
+			}
+			return isMe;
+		}
 	}
 ]);
