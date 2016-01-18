@@ -1,7 +1,7 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile','group','friend','side_menu']);
-
+var mainApplicationModule = angular.module(mainApplicationModuleName, 
+                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','dashboard']);
 //Setup a state called home
 mainApplicationModule.config([
 '$stateProvider',
@@ -86,16 +86,6 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }     
     })
-    .state('group', {
-      url: '/group',
-      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},
-               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
-      resolve: {
-        groupPromise: ['group', function(group){
-          return group.getAll();
-        }]
-      }     
-    })
     .state('friend/id', {
       url: '/friend/:id',
       views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},
@@ -113,6 +103,16 @@ function($stateProvider, $urlRouterProvider) {
       resolve: {
         groupPromise: ['friend', function(friend){
           return friend.getAll();
+        }]
+      }     
+    })
+    .state('dashboard/id', {
+      url: '/dashboard/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/dashboard/dashboard.client.view.html', controller: 'DashboardCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams','dashboard', function($stateParams, dashboard){
+          return dashboard.get($stateParams.id);
         }]
       }     
     })

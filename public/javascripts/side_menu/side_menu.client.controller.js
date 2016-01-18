@@ -7,10 +7,10 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 		$scope.init = function(){
         	$scope.getFriends();
 			$scope.getGroups();
-			window.setInterval(function(){
+			/*window.setInterval(function(){
 				$scope.getFriends();
 				$scope.getGroups();
-			},5000);
+			},5000);*/
    	 	}
 
 		$scope.getGroups=function (){
@@ -31,6 +31,11 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 				isMe = true;
 			}
 			return isMe;
+		}
+
+		$scope.dashboard = function (){
+			console.log("#/dashboard/"+sessionStorage.getItem('id'));
+  			document.location.href = "#/dashboard/"+sessionStorage.getItem('id');
 		}
 	}
 ]);

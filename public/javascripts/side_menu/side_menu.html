@@ -1,6 +1,10 @@
                         <div data-ng-init="init()">
                         <!-- Display the list of the current user's friends -->
-                        
+                        <ul class="nav" id="side-menu">
+                            <li> 
+                            <button class="btn btn-primary" ng-click="dashboard()">Dashboard</button>
+                            </li>
+                        </ul>
                         Friends:
                         <ul class="nav" id="side-menu" ng-repeat="friendGroupe in listFriends">
                             <li ng-repeat="user in friendGroupe.users">
