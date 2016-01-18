@@ -16,5 +16,11 @@ angular.module('group').factory('group', ['$http', function($http) {
         });
     };
 
+    o.createBill = function(bill, callback){
+        return $http.put('/group/'+ bill.groupeid, bill).success(function(response) {
+            callback(response);
+        });
+    }
+
     return o;
 }]);
