@@ -1,5 +1,5 @@
-<section >
-    <h1 class="page-header"> Group:{{group.name}} ,{{group._id}}</h1>
+<section data-ng-init="init()">
+    <h1 class="page-header"> Group:{{group.name}}</h1>
 
     <button class="btn" ng-click="bill = true">Create a bill</button>
     <div id="v" ng-show='bill'>
