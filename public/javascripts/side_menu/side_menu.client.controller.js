@@ -7,10 +7,10 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 		$scope.init = function(){
         	$scope.getFriends();
 			$scope.getGroups();
-			/*window.setInterval(function(){
+			window.setInterval(function(){
 				$scope.getFriends();
 				$scope.getGroups();
-			},5000);*/
+			},5000);
    	 	}
 
 		$scope.getGroups=function (){
@@ -24,18 +24,5 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 			$scope.listFriends = data;
 			});
 		}
-
-		$scope.getGroupPage=function(nameGroup){
-			console.log("getGroupPage");
-			var user = {
-                id: sessionStorage.getItem('id'),
-                mail: sessionStorage.getItem('mail'),
-                pseudo: sessionStorage.getItem('pseudo')
-            }; 
-
-			side_menu.getGroupPage(nameGroup,user,function (data){
-			});
-		}
-
 	}
 ]);

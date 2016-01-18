@@ -82,7 +82,7 @@ function($stateProvider, $urlRouterProvider) {
                side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         groupPromise: ['$stateParams', 'group', function($stateParams,group){
-          return group.getAll();
+          return group.getOne($stateParams.id);
         }]
       }     
     })

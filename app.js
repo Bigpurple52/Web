@@ -5,6 +5,7 @@ require('./models/Group');
 require('./models/Payment');
 require('./models/Bill');
 mongoose.connect('mongodb://localhost/bigpurple52_Web');
+var session = require('express-session');
 
 var express = require('express');
 var path = require('path');
@@ -23,6 +24,14 @@ var friend = require('./routes/friend.server.route');
 var side_menu = require('./routes/side_menu.server.route');
 
 var app = express();
+
+var sessionOptions = {
+  secret: "secret",
+  resave : true,
+  saveUninitialized : false
+};
+app.use(session(sessionOptions));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

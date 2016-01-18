@@ -182,7 +182,6 @@ router.post('/userProfile/:id', function(req, res, next) {
     group.type = "GROUP";
     group.users.addToSet(req.body.users);
 
-    console.log(req.body);
     var query = {
         "name": req.body.name,
     };
