@@ -76,6 +76,16 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }      
     })
+    .state('group/id', {
+      url: '/group/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
+      resolve: {
+        groupPromise: ['$stateParams', 'group', function($stateParams,group){
+          return group.getAll();
+        }]
+      }     
+    })
     .state('group', {
       url: '/group',
       views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},

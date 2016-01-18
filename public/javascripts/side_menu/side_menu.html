@@ -17,7 +17,8 @@
                         Groups: 
                         <ul class="nav" id="side-menu" ng-repeat="group in listGroups">
                             <li>
-                                {{group.name}}
+                            <a ng-href="#/group/{{group._id}}" >{{group.name}}</a>
+                            <!-- ng-click="getGroupPage(group.name)">{{group.name}}</a> -->
                             </li>
                         </ul>
 

@@ -4,6 +4,5 @@ angular.module('group').controller('GroupCtrl', [
     'group',
     function($scope, group) {
         $scope.group = group.group;
-
     }
 ]);

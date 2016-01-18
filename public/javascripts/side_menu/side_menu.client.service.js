@@ -19,6 +19,12 @@ angular.module('side_menu').factory('side_menu', ['$http', function($http) {
             callback(data);
         });
     };
+
+    o.getGroupPage= function(name,user,callback){
+        console.log("getGroupPage:"+ name +"," + user.id);
+        return $http.get('/group/' + name,user).success(function(data) {  
+        });
+    };
     return o;
 
 }]);
