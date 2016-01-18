@@ -81,7 +81,7 @@ function($stateProvider, $urlRouterProvider) {
       views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},
                side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
-        groupPromise: ['$stateParams', 'group', function($stateParams,group){
+        groupPromise: ['$stateParams', 'group', function($stateParams, group){
           return group.getOne($stateParams.id);
         }]
       }     
@@ -93,6 +93,16 @@ function($stateProvider, $urlRouterProvider) {
       resolve: {
         groupPromise: ['group', function(group){
           return group.getAll();
+        }]
+      }     
+    })
+    .state('friend/id', {
+      url: '/friend/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'friend', function($stateParams, friend){
+          return friend.getAll($stateParams.id);
         }]
       }     
     })
