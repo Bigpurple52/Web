@@ -22,5 +22,11 @@ angular.module('group').factory('group', ['$http', function($http) {
         });
     }
 
+    o.createPayment = function(payment, callback){
+        return $http.put('/group/'+ payment.groupeid, payment).success(function(response) {
+            callback(response);
+        });
+    }
+
     return o;
 }]);

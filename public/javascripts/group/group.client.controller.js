@@ -34,21 +34,22 @@ angular.module('group').controller('GroupCtrl', [
     	}
 
     	$scope.CreateBillGroup = function(){
-            if (!$scope.descript || !$scope.montant || !$scope.buyer || !$scope.owner) {
+            if (!$scope.group._id || !$scope.descriptbill || !$scope.montantbill || !$scope.buyerbill || !$scope.ownerbill) {
                 return;
             }
             var date = new Date();
             var tmpGroupId = $scope.group._id;
-            var tmpBuyer = $scope.buyer;
-            var tmpDescript = $scope.descript;
-            var tmpCost = $scope.montant;
-            var tmpUsers = $scope.owner;
-            $scope.descript="";
-            $scope.montant="";
-            $scope.buyer="";
-            $scope.owner="";
+            var tmpBuyer = $scope.buyerbill;
+            var tmpDescript = $scope.descriptbill;
+            var tmpCost = $scope.montantbill;
+            var tmpUsers = $scope.ownerbill;
+            $scope.descriptbill="";
+            $scope.montantbill="";
+            $scope.buyerbill="";
+            $scope.ownerbill="";
 
             group.createBill({
+                typebp : "bill",
             	groupeid : tmpGroupId,
             	buyer : tmpBuyer,
             	descript :tmpDescript ,
@@ -60,5 +61,38 @@ angular.module('group').controller('GroupCtrl', [
                 document.location.href='#/group/'+$scope.group._id;
             });
     	}
+
+        $scope.CreatePaymentGroup = function(){
+            console.log("début création d'un payment");
+            if (!$scope.group._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
+                return;
+            }
+            console.log("début après création d'un payment");
+
+            var date = new Date();
+            var tmpGroupId = $scope.group._id;
+            var tmpGiver = $scope.giverpayment;
+            var tmpDescript = $scope.descriptpayment;
+            var tmpCost = $scope.montantpayment;
+            var tmpReciever = $scope.recieverpayment;
+
+            $scope.descriptpayment="";
+            $scope.montantpayment="";
+            $scope.giverpayment="";
+            $scope.recieverpayment="";
+            console.log("création d'un payment");
+            group.createPayment({
+                typebp: "payment",
+                groupeid : tmpGroupId,
+                giver : tmpGiver,
+                descript :tmpDescript ,
+                cost : tmpCost,
+                reciever : tmpReciever,
+                date : date
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.href='#/group/'+$scope.group._id;
+            });
+        }
     }
 ]);
