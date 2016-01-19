@@ -11,27 +11,27 @@ angular.module('group').controller('GroupCtrl', [
         	$scope.calculateBalance();
         }
 
-        //A TESTER
         $scope.calculateBalance = function(){
-        	for (var user of $scope.group.users){
-        		$scope.balance.set(user.mail,0);
-        	}
-            if(typeof group.bill !== 'undefined' && group.bill.lenght>0){
-    			for (var bill of group.bill){
-    				$scope.balance.set(bill.buyer.mail,bill.buyer.cost);
-    				for (var user of bill.users){
-    					$scope.balance.set(user.mail, scope.balance.get(user.mail)- user.cost);
-    				}
-        		}
+            for (var user of $scope.group.users){
+                $scope.balance.set(user.mail,0);
             }
-            if(typeof group.payments !== 'undefined' && group.payments.lenght>0)
-    		for (var payment in group.payments){
-				$scope.balance.set(payment.buyer.mail,payment.buyer.cost);
-				for (var user in bill.users){
-					$scope.balance.set(user.mail, scope.balance.get(user.mail)- user.cost);
-				}
-    		}
-    	}
+           if(typeof $scope.group.bills !== 'undefined' && $scope.group.bills.length>0){
+                for (var bill of $scope.group.bills){
+                    $scope.balance.set(bill.buyer.mail,$scope.balance.get(bill.buyer.mail)+bill.buyer.cost);
+                    for (var user of bill.users){
+                        $scope.balance.set(user.mail, $scope.balance.get(user.mail)- user.cost);
+                    }
+                }
+           }
+/*
+            if(typeof $scope.group.payments !== 'undefined' && $scope.group.payments.length>0)
+                for (var payment in $scope.group.payments){
+                    $scope.balance.set(payment.buyer.mail,$scope.balance.get(bill.buyer.mail) + payment.buyer.cost);
+                    for (var user in bills.users){
+                        $scope.balance.set(user.mail, scope.balance.get(user.mail)- user.cost);
+                    }
+                }*/
+        }
 
     	$scope.CreateBillGroup = function(){
             if (!$scope.group._id || !$scope.descriptbill || !$scope.montantbill || !$scope.buyerbill || !$scope.ownerbill) {

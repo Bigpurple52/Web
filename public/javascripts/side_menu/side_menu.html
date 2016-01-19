@@ -1,34 +1,32 @@
-                        <div data-ng-init="init()">
-                        <!-- Display the list of the current user's friends -->
-                        <ul class="nav" id="side-menu">
-                            <li> 
-                            <button class="btn btn-primary" ng-click="dashboard()">Dashboard</button>
-                            </li>
-                        </ul>
-                        Friends:
-                        <ul class="nav" id="side-menu" ng-repeat="friendGroupe in listFriends">
-                            <li ng-repeat="user in friendGroupe.users">
-                                <div ng-if="!isMe(user._id)" >
-                                    <a ng-href="#/friend/{{friendGroupe._id}}" >{{user.pseudo}}</a>
-                                </div>
-                            </li>
-                        </ul>
+<div data-ng-init="init()">
+<!-- Display the list of the current user's friends -->
+    <ul class="nav" id="side-menu">
+        <li> 
+            <button class="btn btn-primary" ng-click="dashboard()">Dashboard</button>
+        </li>
+    </ul>
+    
+    Friends:
+    <ul class="nav" id="side-menu" ng-repeat="friendGroupe in listFriends" >
+        <li ng-repeat="user in friendGroupe.users" ng-if="!isMe(user._id)" >
+            <a ng-href="#/friend/{{friendGroupe._id}}" >{{user.pseudo}}</a>
+        </li>
+    </ul>
 
-                        <!-- Add a friend form -->
-                        <button class="btn btn-primary">Ajouter un ami</button>
-                            
+    <!-- Add a friend form -->
+    <button class="btn btn-primary">Ajouter un ami</button>
 
-                        <!-- Display the list of the current user's groups -->
-                        <br>
-                        Groups: 
-                        <ul class="nav" id="side-menu" ng-repeat="group in listGroups">
-                            <li>
-                            <a ng-href="#/group/{{group._id}}" >{{group.name}}</a>
-                            <!-- ng-click="getGroupPage(group.name)">{{group.name}}</a> -->
-                            </li>
-                        </ul>
 
-                        <!-- Create a group -->
-                        <button class="btn btn-primary">Créer un groupe</button>
-                         
-                        </div>
+    <!-- Display the list of the current user's groups -->
+    <br>
+    Groups: 
+    <ul class="nav" id="side-menu" ng-repeat="group in listGroups">
+        <li>
+            <a ng-href="#/group/{{group._id}}" >{{group.name}}</a>
+        </li>
+    </ul>
+
+    <!-- Create a group -->
+    <button class="btn btn-primary">Créer un groupe</button>
+
+</div>

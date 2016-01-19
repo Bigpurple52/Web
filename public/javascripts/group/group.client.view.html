@@ -1,5 +1,6 @@
 <section data-ng-init="init()">
-    <h1 class="page-header"> Group: {{group.name}}</h1>
+	<div class="col-lg-10">
+	    <h1 class="page-header"> Group: {{group.name}}</h1>
 
     <span ng-hide="payment">
     	<button class="btn" ng-click="bill = true" ng-hide='bill'>Create a bill</button>
@@ -70,22 +71,19 @@
 		</form>
 	</div>
 	<div id="divDashboardGroup" ng-hide='bill || payment'>
-		blablabla
-		blabla
-		bla
-		blabla
-		blablabla
-		blabla
-		bla
-		blabla
-		blablabla
-		blabla
-		bla
-		blabla
-		blablabla
-		blabla
-		bla
-		blabla
-		blablabla
+			<div ng-repeat="bill in group.bills">
+				<div class="row">
+					{{bill.descript}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<h2>Groupe Balance</h2>
+		<div ng-repeat="user in group.users">
+			<div class="row">
+				{{user.pseudo}} : {{balance.get(user.mail)}}
+			</div>
+		</div>
 	</div>
 </section>
