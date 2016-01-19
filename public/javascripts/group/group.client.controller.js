@@ -9,6 +9,7 @@ angular.module('group').controller('GroupCtrl', [
 
         $scope.init = function(){
         	$scope.calculateBalance();
+            $scope.sortBillPayment();
         }
 
         $scope.calculateBalance = function(){
@@ -23,7 +24,7 @@ angular.module('group').controller('GroupCtrl', [
                     }
                 }
            }
-/*
+           /*
             if(typeof $scope.group.payments !== 'undefined' && $scope.group.payments.length>0)
                 for (var payment in $scope.group.payments){
                     $scope.balance.set(payment.buyer.mail,$scope.balance.get(bill.buyer.mail) + payment.buyer.cost);
@@ -94,5 +95,80 @@ angular.module('group').controller('GroupCtrl', [
                 document.location.href='#/group/'+$scope.group._id;
             });
         }
+
+        $scope.DisplayBalance = function(user){
+            var b = $scope.balance.get(user.mail)
+            var res = user.pseudo +" : ";
+
+            if( b < 0){
+                res += "Doit "+b *(-1)+'€';
+            }
+            if( b > 0){
+                res += "A avancer "+ b + "€";
+            }
+            if( b== 0){
+                res += "Ne doit rien";
+            }
+            return res;
+        }
+
+        $scope.toDateString= function(date){
+            var d = new Date(date)
+            return d.toDateString();
+        }
+
+        $scope.DisplayObject= function(o){
+            var res;
+            if(typeof o.giver !== 'undefined' ){
+                res = $scope.DisplayPayment(o);
+                
+            }else{
+                res = $scope.DisplayBill(o);
+            }
+            return res;
+        }
+
+        $scope.DisplayBill = function(bill){
+            var res = $scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€" ;
+            return res;
+        }
+
+        $scope.DisplayPayment= function(payment){
+            var res = $scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
+            return res;
+        }
+
+        $scope.sortBillPayment= function(){
+            var bill =0;
+            var payment =0;
+            var res = [];
+
+            while(bill<$scope.group.bills.length || payment <$scope.group.payments.length){
+                if(bill >= $scope.group.bills.length && payment < $scope.group.payments.length){
+                    res.push($scope.group.payments[payment]);
+                    payment += 1;
+
+                }
+                if(payment >= $scope.group.payments.length && bill<$scope.group.bills.length){
+                    res.push($scope.group.bills[bill]);
+                    bill += 1;
+                }
+                if(bill<$scope.group.bills.length && payment <$scope.group.payments.length){
+                    var DateBill = new Date($scope.group.bills[bill]);
+                    var DatePayment = new Date($scope.group.payments[payment]);
+                    if(DateBill.getTime() > DatePayment.getTime()){  //Get the time (milliseconds since January 1, 1970)
+                        res.push($scope.group.payments[payment]);
+                        payment += 1;
+                    }else{
+                        res.push($scope.group.bills[bill]);
+                        bill += 1;
+                    }
+                }    
+            }
+            console.log(res);
+            res.reverse();
+            $scope.BillPaymentSorted = res;
+        }
+
     }
 ]);
