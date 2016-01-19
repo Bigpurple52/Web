@@ -29,7 +29,6 @@ router.put('/group/:id', function(req, res) {
 		element.cost = costPerUser;
 	});
 	buyer.cost=req.body.cost;
-	console.log(users);
 	var bill = {
 		  "buyer": { "_id": null,
 		      "mail": null,
@@ -46,15 +45,8 @@ router.put('/group/:id', function(req, res) {
 	bill.descript = req.body.descript;
 	bill.date = req.body.date;
 
-	console.log(req.body.descript);
-	//console.dir(bill);
-
-	//res.json(bill);
-
-	/*DBgroups.finOne({"_id": req.body.groupeid}, function(err, group){ 
-	});*/
-
 	DBgroups.findOneAndUpdate({"_id" : req.body.groupeid}, {$push: {"bills": bill}}, {new: true}, function(err, doc) {
+		res.json(doc);
 	});
 });
 

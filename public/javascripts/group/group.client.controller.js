@@ -37,23 +37,27 @@ angular.module('group').controller('GroupCtrl', [
             if (!$scope.descript || !$scope.montant || !$scope.buyer || !$scope.owner) {
                 return;
             }
-            console.log($scope.descript);
+            var date = new Date();
+            var tmpGroupId = $scope.group._id;
+            var tmpBuyer = $scope.buyer;
+            var tmpDescript = $scope.descript;
+            var tmpCost = $scope.montant;
+            var tmpUsers = $scope.owner;
+            $scope.descript="";
+            $scope.montant="";
+            $scope.buyer="";
+            $scope.owner="";
 
-            $scope.date = new Date();
             group.createBill({
-            	groupeid : $scope.group._id,
-            	buyer : $scope.buyer,
-            	descript : $scope.descript,
-            	cost : $scope.montant,
-            	users : $scope.owner,
-            	date : $scope.date
+            	groupeid : tmpGroupId,
+            	buyer : tmpBuyer,
+            	descript :tmpDescript ,
+            	cost : tmpCost,
+            	users : tmpUsers,
+            	date : date
             }, function(data){
-	            $scope.descript="";
-	    		$scope.montant="";
-	    		$scope.buyer="";
-	    		$scope.owner="";
-
 	            alert("Modification effectuée");
+                document.location.href='#/group/'+$scope.group._id;
             });
     	}
     }

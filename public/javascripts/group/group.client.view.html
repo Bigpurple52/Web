@@ -1,6 +1,7 @@
 <section data-ng-init="init()">
     <h1 class="page-header"> Group: {{group.name}}</h1>
 
+    
     <button class="btn" ng-click="bill = true">Create a bill</button>
     <div id="v" ng-show='bill'>
 		<form name="newBillForm" role="form" novalidate>
@@ -28,7 +29,7 @@
 		       <select multiple class=form-control ng-model="owner" ng-options="user as user.pseudo for user in group.users track by user._id">
 				</select>
 		    </div>
-		    <button class="btn btn-primary" ng-click="CreateBillGroup(); bill = false" ng-disabled="newBillForm.$invalid">Editer</button>
+		    <button class="btn btn-primary" ng-click="CreateBillGroup(); bill = false" ng-disabled="newBillForm.$invalid">Enregistrer</button>
 		    <button class="btn btn-warning" ng-click="bill = false">Annuler</button>
 		</form>
 	</div>
