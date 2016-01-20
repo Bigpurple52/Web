@@ -127,21 +127,28 @@ angular.module('group').controller('GroupCtrl', [
 
             while(bill<$scope.group.bills.length || payment <$scope.group.payments.length){
                 if(bill >= $scope.group.bills.length && payment < $scope.group.payments.length){
+                    console.log("++");
                     res.push($scope.group.payments[payment]);
                     payment += 1;
 
                 }
                 if(payment >= $scope.group.payments.length && bill<$scope.group.bills.length){
+                    console.log("--");
                     res.push($scope.group.bills[bill]);
                     bill += 1;
                 }
                 if(bill<$scope.group.bills.length && payment <$scope.group.payments.length){
-                    var DateBill = new Date($scope.group.bills[bill]);
-                    var DatePayment = new Date($scope.group.payments[payment]);
+                    var DateBill = new Date($scope.group.bills[bill].date);
+                    var DatePayment = new Date($scope.group.payments[payment].date);
+                    console.log($scope.group.payments[payment]);
+                    console.log(DatePayment);
+                    console.log("DateBill:"+DateBill.getTime()+",DatePayment:"+DatePayment.getTime() );
                     if(DateBill.getTime() > DatePayment.getTime()){  //Get the time (milliseconds since January 1, 1970)
+                        console.log("+");
                         res.push($scope.group.payments[payment]);
                         payment += 1;
                     }else{
+                        console.log("-");
                         res.push($scope.group.bills[bill]);
                         bill += 1;
                     }
@@ -192,6 +199,7 @@ angular.module('group').controller('GroupCtrl', [
             for (var user of bill.users){
                 HTML+= user.pseudo +" doit "+ user.cost+"€ <br/>";
             }
+            HTML+="<button class=\"btn\" onClick=\"\">Suppression </button>";
             HTML+="</div>";
 
             var newDiv = document.createElement('div');
@@ -248,6 +256,8 @@ angular.module('group').controller('GroupCtrl', [
                 }
             }
         }
+
+        //Surement il faudra virer le scope
 
         
     }
