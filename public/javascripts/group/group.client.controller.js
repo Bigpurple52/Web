@@ -10,7 +10,6 @@ angular.module('group').controller('GroupCtrl', [
         $scope.init = function(){
         	$scope.calculateBalance();
             $scope.sortBillPayment(function(){
-                $scope.n =0;
                 $scope.DisplayHistorique();
             });
         }
@@ -176,13 +175,31 @@ angular.module('group').controller('GroupCtrl', [
         DisplayBillHTML = function(bill){
             var HTML = "";
             HTML+="<span class=\"glyphicon glyphicon-list-alt\"></span>    ";
-            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€" ;
+            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€";
 
+            var tmp = calculateBalanceForOneBill(bill);
+            if(tmp==0){
+                HTML+=", Ne vous concerne pas <br/>";
+            }
+            if(tmp < 0){
+                HTML+=", Tu dois " + (-1)*calculateBalanceForOneBill(bill) +"€ <br/>";
+            }
+            if(tmp> 0){
+                HTML+=", On te dois "+calculateBalanceForOneBill(bill) +"€ <br/>";
+            }
+
+            HTML+="<div class=\"ng-hide\">";
+            for (var user of bill.users){
+                HTML+= user.pseudo +" doit "+ user.cost+"€ <br/>";
+            }
+            HTML+="</div>";
 
             var newDiv = document.createElement('div');
+            newDiv.setAttribute("onClick","showHiddenDiv(this)");
             document.getElementById('divDashboardGroup').appendChild(newDiv);
 
             newDiv.innerHTML = HTML;
+
         }
 
         DisplayPaymentHTML= function(payment){
@@ -196,23 +213,22 @@ angular.module('group').controller('GroupCtrl', [
         }
 
         // PAS TESTER
-        calculateBalanceForOneBill= function(bill,user){
+        calculateBalanceForOneBill= function(bill){
+            var mailCurrentUser = sessionStorage.getItem('mail');
             var res = 0;
-            if(bill.buyer.mail == user.mail){
+            if(bill.buyer.mail == mailCurrentUser){
                 res += bill.buyer.cost;
             }
-            for (var userB of bill.users){
-                if(userB.mail == user.mail){
-                    res -= userB.cost;
+            for (var user of bill.users){
+                if(user.mail == mailCurrentUser){
+                    res -= user.cost;
                 }
             }
+            return res;
         }
 
+        showHiddenDiv = function(div){
+            div.childNodes[3].classList.toggle('ng-hide');
+        }
     }
 ]);
-
-// Ne vous concerne pas..
-
-// Tu Dois
-
-// On te Dois
