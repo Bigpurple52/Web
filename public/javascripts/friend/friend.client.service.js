@@ -16,5 +16,17 @@ angular.module('friend').factory('friend', ['$http', function($http) {
         });
     };
 
+    o.createBill = function(bill, callback){
+        return $http.put('/friend/'+ bill.groupeid, bill).success(function(response) {
+            callback(response);
+        });
+    }
+
+    o.createPayment = function(payment, callback){
+        return $http.put('/friend/'+ payment.groupeid, payment).success(function(response) {
+            callback(response);
+        });
+    }
+
     return o;
 }]);

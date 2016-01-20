@@ -1,3 +1,88 @@
-<section >
-    <h1 class="page-header">Friend : <span ng-repeat="user in friend.users" ng-if="!isMe(user._id)">{{user.pseudo}}</span></h1>
+<section data-ng-init="init()">
+	<div class="col-lg-10">
+	    <h1 class="page-header">Friend : <span ng-repeat="user in friend.users" ng-if="!isMe(user._id)">{{user.pseudo}}</span></h1>
+	    <span ng-hide="payment">
+	    	<button class="btn" ng-click="bill = true" ng-hide='bill'>Create a bill</button>
+		</span>
+		<span ng-hide="bill">
+	    	<button class="btn" ng-click="payment = true" ng-hide='payment'>Create a payment</button>
+		</span>
+	    <div ng-show='bill'>
+			<form name="newBillForm" role="form" novalidate>
+
+		    	<div class="form-friend" ng-class="{'has-error': newBillForm.descriptbill.$invalid && newBillForm.descriptbill.$dirty, 'has-success': newBillForm.descriptbill.$valid}">
+		            <label for="descriptbill">Description:</label>
+		            <input type="text" class="form-control" name="descriptbill" placeholder="Description" ng-model="descriptbill" required ng-minlength="1" ng-maxlength="250">
+		                <span class="error" ng-show="newBillForm.descriptbill.$error.required && newBillForm.descriptbill.$dirty">Ce champ doit être rempli</span>
+		                <span class="error" ng-show="newBillForm.descriptbill.$error.maxlength">Description trop long (Maximum 250 caractères)</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newBillForm.montantbill.$invalid && newBillForm.montantbill.$dirty, 'has-success': newBillForm.montantbill.$valid}">
+		            <label for="montantbill">Montant:</label>
+		            <input type="number" class="form-control" name="montantbill" placeholder="Montant" ng-model="montantbill" required>
+		                <span class="error" ng-show="newBillForm.montantbill.$error.required && newBillForm.montantbill.$dirty">Ce champ doit être rempli</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newBillForm.buyerbill.$invalid && newBillForm.buyerbill.$dirty, 'has-success': newBillForm.buyerbill.$valid}">
+		            <label for="buyerbill">Celui qui paye: </label>
+		            <select class=form-control ng-model="buyerbill" ng-options="user as user.pseudo for user in friend.users track by user._id">
+		            </select>
+		        </div>
+			    <div class="form-friend" ng-class="{'has-error': newBillForm.ownerbill.$invalid && newBillForm.ownerbill.$dirty, 'has-success': newBillForm.ownerbill.$valid}">
+			        <label for="ownerbill">Ceux qui sont inclus: </label>
+					<select multiple class=form-control ng-model="ownerbill" ng-options="user as user.pseudo for user in friend.users track by user._id">
+					</select>
+			    </div>
+			    <button class="btn btn-primary" ng-click="CreateBillFriend(); bill = false;" ng-disabled="newBillForm.$invalid">Enregistrer</button>
+			    <button class="btn btn-warning" ng-click="bill = false">Annuler</button>
+			</form>
+		</div>
+
+
+		<div ng-show='payment'>
+			<form name="newPaymentForm" role="form" novalidate>
+
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.descriptpayment.$invalid && newPaymentForm.descriptpayment.$dirty, 'has-success': newPaymentForm.descriptpayment.$valid}">
+		            <label for="descriptpayment">Description:</label>
+		            <input type="text" class="form-control" name="descriptpayment" placeholder="Description" ng-model="descriptpayment" required ng-minlength="1" ng-maxlength="250">
+		                <span class="error" ng-show="newPaymentForm.descriptpayment.$error.required && newPaymentForm.descriptpayment.$dirty">Ce champ doit être rempli</span>
+		                <span class="error" ng-show="newPaymentForm.descriptpayment.$error.maxlength">Description trop long (Maximum 250 caractères)</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.montantpayment.$invalid && newPaymentForm.montantpayment.$dirty, 'has-success': newPaymentForm.montantpayment.$valid}">
+		            <label for="montantpayment">Montant:</label>
+		            <input type="number" class="form-control" name="montantpayment" placeholder="Montant" ng-model="montantpayment" required>
+		                <span class="error" ng-show="newPaymentForm.montantpayment.$error.required && newPaymentForm.montantpayment.$dirty">Ce champ doit être rempli</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.giverpayment.$invalid && newPaymentForm.giverpayment.$dirty, 'has-success': newPaymentForm.giverpayment.$valid}">
+		            <label for="giverpayment">Donne: </label>
+		            <select class=form-control ng-model="giverpayment" ng-options="user as user.pseudo for user in friend.users track by user._id">
+		            </select>
+		        </div>
+			    <div class="form-friend" ng-class="{'has-error': newPaymentForm.recieverpayment.$invalid && newPaymentForm.recieverpayment.$dirty, 'has-success': newPaymentForm.recieverpayment.$valid}">
+			        <label for="recieverpayment">Recoit: </label>
+					<select class=form-control ng-model="recieverpayment" ng-options="user as user.pseudo for user in friend.users track by user._id">
+					</select>
+			    </div>
+			    <button class="btn btn-primary" ng-click="CreatePaymentFriend(); payment = false;" ng-disabled="newPaymentForm.$invalid">Enregistrer</button>
+			    <button class="btn btn-warning" ng-click="payment = false">Annuler</button>
+			</form>
+		</div>
+		<div id="divDashboardGroup" ng-hide='bill || payment'>
+			<div ng-repeat="o in BillPaymentSorted">
+				<div class="row">
+					{{DisplayObject(o)}}
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-2">
+		<h2>Groupe Balance</h2>
+		<div ng-repeat="user in friend.users">
+			<div class="row">
+				{{DisplayBalance(user)}}
+			</div>
+		</div>
+	</div>
 </section>
