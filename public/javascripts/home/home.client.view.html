@@ -1,4 +1,43 @@
 <section data-ng-init="init()">
-    <h1 class="page-header">Home</h1>
-</section>
+	<div class="col-lg-9">
+	    <h1 class="page-header">Dashboard</h1>
+	    <div class="row">
+	    	<div class="col-lg-3">
+	    		Balance totale:
+	    	</div>
+	    	<div class="col-lg-3">
+	    		Ce que je doit:
+	    	</div>
+	    	<div class="col-lg-3">
+	    		Ce qu'on me doit:
+	    	</div>
+	    </div>
+		<div class="row">
+	    	<div class="col-lg-3">
+	    		{{totalBalance}}€
+	    	</div>
+	    	<div class="col-lg-3">
+	    		{{youOwe}}€
+	    	</div>
+	    	<div class="col-lg-3">
+	    		{{youAreOwned}}€
+	    	</div>
+	    </div>
 
+		<div class="row">
+	    	<div class="col-lg-5">
+	    		<h2>A qui je doit de l'argent</h2>
+	    		<div ng-repeat="d in listYouOwe">
+				1
+				</div>
+			</div>
+	    	<div class="col-lg-4">
+	    		<h2>Qui me doit de l'argent</h2>
+	    		<div ng-repeat="d in listYouAreOwned">
+				1
+				</div>
+	    	</div>
+	    </div>
+
+	</div>     
+</section>
