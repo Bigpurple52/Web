@@ -92,17 +92,7 @@ function($stateProvider, $urlRouterProvider) {
                side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
       resolve: {
         groupPromise: ['$stateParams', 'friend', function($stateParams, friend){
-          return friend.getAll($stateParams.id);
-        }]
-      }     
-    })
-    .state('friend', {
-      url: '/friend',
-      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},
-               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
-      resolve: {
-        groupPromise: ['friend', function(friend){
-          return friend.getAll();
+          return friend.getOne($stateParams.id);
         }]
       }     
     })

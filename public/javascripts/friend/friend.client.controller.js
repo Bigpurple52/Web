@@ -2,7 +2,15 @@
 angular.module('friend').controller('FriendCtrl', [
     '$scope',
     'friend',
-	function($scope, group) {
-        $scope.group = group.group;
+	function($scope, friend) {
+        $scope.friend = friend.friend;
+
+		$scope.isMe=function(id){
+			var isMe=false;
+			if(id==sessionStorage.getItem('id')){
+				isMe = true;
+			}
+			return isMe;
+		}
     }
 ]);
