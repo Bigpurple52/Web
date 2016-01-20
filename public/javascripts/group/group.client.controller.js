@@ -9,7 +9,10 @@ angular.module('group').controller('GroupCtrl', [
 
         $scope.init = function(){
         	$scope.calculateBalance();
-            $scope.sortBillPayment();
+            $scope.sortBillPayment(function(){
+                $scope.n =0;
+                $scope.DisplayHistorique();
+            });
         }
 
         $scope.calculateBalance = function(){
@@ -24,16 +27,16 @@ angular.module('group').controller('GroupCtrl', [
                     }
                 }
            }
-           /*
+           console.log($scope.group);
+           
             if(typeof $scope.group.payments !== 'undefined' && $scope.group.payments.length>0)
-                for (var payment in $scope.group.payments){
-                    $scope.balance.set(payment.buyer.mail,$scope.balance.get(bill.buyer.mail) + payment.buyer.cost);
-                    for (var user in bills.users){
-                        $scope.balance.set(user.mail, scope.balance.get(user.mail)- user.cost);
-                    }
-                }*/
+                for (var payment of $scope.group.payments){
+                    $scope.balance.set(payment.giver.mail,$scope.balance.get(payment.giver.mail) + payment.cost);
+                    $scope.balance.set(payment.reciever.mail,$scope.balance.get(payment.reciever.mail)- payment.cost);
+                    
+                }
         }
-
+     //var res = $scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
     	$scope.CreateBillGroup = function(){
             if (!$scope.group._id || !$scope.descriptbill || !$scope.montantbill || !$scope.buyerbill || !$scope.ownerbill) {
                 return;
@@ -117,28 +120,8 @@ angular.module('group').controller('GroupCtrl', [
             return d.toDateString();
         }
 
-        $scope.DisplayObject= function(o){
-            var res;
-            if(typeof o.giver !== 'undefined' ){
-                res = $scope.DisplayPayment(o);
-                
-            }else{
-                res = $scope.DisplayBill(o);
-            }
-            return res;
-        }
 
-        $scope.DisplayBill = function(bill){
-            var res = $scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€" ;
-            return res;
-        }
-
-        $scope.DisplayPayment= function(payment){
-            var res = $scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
-            return res;
-        }
-
-        $scope.sortBillPayment= function(){
+        $scope.sortBillPayment= function(callback){
             var bill =0;
             var payment =0;
             var res = [];
@@ -168,7 +151,68 @@ angular.module('group').controller('GroupCtrl', [
             console.log(res);
             res.reverse();
             $scope.BillPaymentSorted = res;
+            callback();
+        }
+
+        $scope.DisplayHistorique= function(){
+            var list = $scope.BillPaymentSorted;
+            if(typeof list !== 'undefined' && list.length>0){
+                for (var o of list){
+                    DisplayObjectHTML(o);
+                }
+            }
+        }
+
+        DisplayObjectHTML= function(o){
+            var res;
+            if(typeof o.giver !== 'undefined' ){
+                DisplayPaymentHTML(o);
+                
+            }else{
+                DisplayBillHTML(o);
+            }
+        }
+
+        DisplayBillHTML = function(bill){
+            var HTML = "";
+            HTML+="<span class=\"glyphicon glyphicon-list-alt\"></span>    ";
+            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€" ;
+
+
+            var newDiv = document.createElement('div');
+            document.getElementById('divDashboardGroup').appendChild(newDiv);
+
+            newDiv.innerHTML = HTML;
+        }
+
+        DisplayPaymentHTML= function(payment){
+            var HTML = "";
+            HTML+="<span class=\"glyphicon glyphicon-eur\"></span>    ";
+            HTML+=$scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
+            var newDiv = document.createElement('div');
+            document.getElementById('divDashboardGroup').appendChild(newDiv);
+
+            newDiv.innerHTML = HTML;
+        }
+
+        // PAS TESTER
+        calculateBalanceForOneBill= function(bill,user){
+            var res = 0;
+            if(bill.buyer.mail == user.mail){
+                res += bill.buyer.cost;
+            }
+            for (var userB of bill.users){
+                if(userB.mail == user.mail){
+                    res -= userB.cost;
+                }
+            }
         }
 
     }
 ]);
+
+// Ne vous concerne pas..
+
+// Tu Dois
+
+// On te Dois
