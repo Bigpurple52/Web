@@ -49,6 +49,7 @@ angular.module('friend').controller('FriendCtrl', [
                 return;
             }
             var date = new Date();
+            var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
             var tmpGroupId = $scope.friend._id;
             var tmpBuyer = $scope.buyerbill;
             var tmpDescript = $scope.descriptbill;
@@ -60,6 +61,7 @@ angular.module('friend').controller('FriendCtrl', [
             $scope.ownerbill="";
 
             friend.createBill({
+                identifier: identifier,
                 typebp : "bill",
             	groupeid : tmpGroupId,
             	buyer : tmpBuyer,
@@ -81,17 +83,20 @@ angular.module('friend').controller('FriendCtrl', [
             console.log("début après création d'un payment");
 
             var date = new Date();
+            var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
             var tmpGroupId = $scope.friend._id;
             var tmpGiver = $scope.giverpayment;
             var tmpDescript = $scope.descriptpayment;
             var tmpCost = $scope.montantpayment;
             var tmpReciever = $scope.recieverpayment;
+
             $scope.descriptpayment="";
             $scope.montantpayment="";
             $scope.giverpayment="";
             $scope.recieverpayment="";
             console.log("création d'un payment");
             friend.createPayment({
+                identifier: identifier,
                 typebp: "payment",
                 groupeid : tmpGroupId,
                 giver : tmpGiver,
@@ -163,8 +168,8 @@ angular.module('friend').controller('FriendCtrl', [
                     bill += 1;
                 }
                 if(bill<$scope.friend.bills.length && payment <$scope.friend.payments.length){
-                    var DateBill = new Date($scope.friend.bills[bill]);
-                    var DatePayment = new Date($scope.friend.payments[payment]);
+                    var DateBill = new Date($scope.friend.bills[bill].date);
+                    var DatePayment = new Date($scope.friend.payments[payment].date);
                     if(DateBill.getTime() > DatePayment.getTime()){  //Get the time (milliseconds since January 1, 1970)
                         res.push($scope.friend.payments[payment]);
                         payment += 1;
@@ -202,7 +207,7 @@ angular.module('friend').controller('FriendCtrl', [
         DisplayBillHTML = function(bill){
             var HTML = "";
             HTML+="<span class=\"glyphicon glyphicon-list-alt\"></span>    ";
-            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€ <button class=\"btn\">Edition</button>";
+            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€ <button class=\"btn\">Edition</button>";//+ajoutFormEditBill();
 
 
             var newDiv = document.createElement('div');
@@ -214,7 +219,7 @@ angular.module('friend').controller('FriendCtrl', [
         DisplayPaymentHTML= function(payment){
             var HTML = "";
             HTML+="<span class=\"glyphicon glyphicon-eur\"></span>    ";
-            HTML+=$scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo+"<button class=\"btn\">Edition</button>";
+            HTML+=$scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo+"<button onClick=\"testAff("+payment+")\" class=\"btn\">Edition</button>";//+ajoutFormEditBill();
             var newDiv = document.createElement('div');
             document.getElementById('divDashboardGroup').appendChild(newDiv);
 
@@ -233,6 +238,43 @@ angular.module('friend').controller('FriendCtrl', [
                 }
             }
         }
+
+        ajoutFormEditBill = function(){
+            var res="";
+            res+=   "<form name=\"editBillForm\" role=\"form\" novalidate>";
+            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.descriptbill.$invalid && editBillForm.descriptbill.$dirty, 'has-success': editBillForm.descriptbill.$valid}\">";
+            res+=           "<label for=\"descriptbill\">Description:</label>";
+            res+=               "<input type=\"text\" class=\"form-control\" name=\"descriptbill\" placeholder=\"Description\" ng-model=\"descriptbill\" required ng-minlength=\"1\" ng-maxlength=\"250\">";
+            res+=                   "<span class=\"error\" ng-show=\"editBillForm.descriptbill.$error.required && newBillForm.descriptbill.$dirty\">Ce champ doit être rempli</span>";
+            res+=                   "<span class=\"error\" ng-show=\"editBillForm.descriptbill.$error.maxlength\">Description trop long (Maximum 250 caractères)</span>";
+            res+=               "</input>";
+            res+=       "</div>";
+            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.montantbill.$invalid && editBillForm.montantbill.$dirty, 'has-success': editBillForm.montantbill.$valid}\">";
+            res+=           "<label for=\"montantbill\">Montant:</label>";
+            res+=               "<input type=\"number\" class=\"form-control\" name=\"montantbill\" placeholder=\"Montant\" ng-model=\"montantbill\" required>";
+            res+=                   "<span class=\"error\" ng-show=\"editBillForm.montantbill.$error.required && editBillForm.montantbill.$dirty\">Ce champ doit être rempli</span>";
+            res+=               "</input>";
+            res+=       "</div>";
+            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.buyerbill.$invalid && editBillForm.buyerbill.$dirty, 'has-success': editBillForm.buyerbill.$valid}\">";
+            res+=           "<label for=\"buyerbill\">Celui qui paye: </label>";
+            res+=               "<select class=form-control ng-model=\"buyerbill\" ng-options=\"user as user.pseudo for user in friend.users track by user._id\">";
+            res+=               "</select>";
+            res+=       "</div>";
+            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.ownerbill.$invalid && editBillForm.ownerbill.$dirty, 'has-success': editBillForm.ownerbill.$valid}\">";
+            res+=           "<label for=\"ownerbill\">Ceux qui sont inclus: </label>";
+            res+=               "<select multiple class=form-control ng-model=\"ownerbill\" ng-options=\"user as user.pseudo for user in friend.users track by user._id\">";
+            res+=               "</select>";
+            res+=       "</div>";
+            res+=       "<button class=\"btn btn-primary\" ng-disabled=\"editBillForm.$invalid\">Editer</button>";
+            res+=       "<button class=\"btn btn-warning\">Annuler</button>";
+            res+=   "</form>";
+            return res;
+        }
+
+        testAff = function(param){
+            alert("le paramètre est : " + param);
+        }
+
     }
 
 ]);

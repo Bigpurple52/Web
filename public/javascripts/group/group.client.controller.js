@@ -41,6 +41,7 @@ angular.module('group').controller('GroupCtrl', [
                 return;
             }
             var date = new Date();
+            var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
             var tmpGroupId = $scope.group._id;
             var tmpBuyer = $scope.buyerbill;
             var tmpDescript = $scope.descriptbill;
@@ -52,6 +53,7 @@ angular.module('group').controller('GroupCtrl', [
             $scope.ownerbill="";
 
             group.createBill({
+                identifier: identifier,
                 typebp : "bill",
             	groupeid : tmpGroupId,
             	buyer : tmpBuyer,
@@ -73,6 +75,7 @@ angular.module('group').controller('GroupCtrl', [
             console.log("début après création d'un payment");
 
             var date = new Date();
+            var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
             var tmpGroupId = $scope.group._id;
             var tmpGiver = $scope.giverpayment;
             var tmpDescript = $scope.descriptpayment;
@@ -85,6 +88,7 @@ angular.module('group').controller('GroupCtrl', [
             $scope.recieverpayment="";
             console.log("création d'un payment");
             group.createPayment({
+                identifier: identifier,
                 typebp: "payment",
                 groupeid : tmpGroupId,
                 giver : tmpGiver,

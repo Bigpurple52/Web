@@ -30,6 +30,7 @@ router.put('/friend/:id', function(req, res) {
 		});
 		buyer.cost=req.body.cost;
 		var bill = {
+			  "identifier": null,
 			  "buyer": { "_id": null,
 			      "mail": null,
 			      "pseudo": null,
@@ -39,7 +40,7 @@ router.put('/friend/:id', function(req, res) {
 			  "date": null,
 			  "users": []
 			};
-			
+		bill.identifier = req.body.identifier;
 		bill.buyer = buyer;
 		bill.users = users;
 		bill.descript = req.body.descript;
