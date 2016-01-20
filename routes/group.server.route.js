@@ -41,6 +41,7 @@ router.put('/group/:id', function(req, res) {
 			};
 			
 		bill.buyer = buyer;
+		bill.identifier = req.body.identifier;
 		bill.users = users;
 		bill.descript = req.body.descript;
 		bill.date = req.body.date;
@@ -67,6 +68,7 @@ router.put('/group/:id', function(req, res) {
 		}
 
 		payment.giver = giver;
+		payment.identifier = req.body.identifier;
 		payment.reciever = reciever;
 		payment.cost = req.body.cost;
 		payment.descript = req.body.descript;

@@ -68,6 +68,7 @@ router.put('/friend/:id', function(req, res) {
 		}
 
 		payment.giver = giver;
+		payment.identifier = req.body.identifier;
 		payment.reciever = reciever;
 		payment.cost = req.body.cost;
 		payment.descript = req.body.descript;
