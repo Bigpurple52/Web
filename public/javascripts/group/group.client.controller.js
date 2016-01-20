@@ -61,7 +61,7 @@ angular.module('group').controller('GroupCtrl', [
             	date : date
             }, function(data){
 	            alert("Modification effectuée");
-                document.location.href='#/group/'+$scope.group._id;
+                document.location.reload();
             });
     	}
 
@@ -94,7 +94,7 @@ angular.module('group').controller('GroupCtrl', [
                 date : date
             }, function(data){
                 alert("Modification effectuée");
-                document.location.href='#/group/'+$scope.group._id;
+                document.location.reload();
             });
         }
 
