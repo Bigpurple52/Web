@@ -61,8 +61,8 @@ angular.module('group').controller('GroupCtrl', [
             	date : date
             }, function(data){
 	            alert("Modification effectuée");
-                document.location.reload();
-            });
+		document.location.reload();
+                });
     	}
 
         $scope.CreatePaymentGroup = function(){
@@ -188,7 +188,7 @@ angular.module('group').controller('GroupCtrl', [
                 HTML+=", On te dois "+calculateBalanceForOneBill(bill) +"€ <br/>";
             }
 
-            HTML+="<div class=\"ng-hide\">";
+            HTML+="<div class=\"ng-hide info\">";
             for (var user of bill.users){
                 HTML+= user.pseudo +" doit "+ user.cost+"€ <br/>";
             }
@@ -205,8 +205,17 @@ angular.module('group').controller('GroupCtrl', [
         DisplayPaymentHTML= function(payment){
             var HTML = "";
             HTML+="<span class=\"glyphicon glyphicon-eur\"></span>    ";
-            HTML+=$scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
+            HTML+=$scope.toDateString(payment.date)+" Remboursement: "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
+            
+            HTML+="<div class=\"ng-hide info\">";
+            HTML+="Description: "+payment.descript+ "<br/>";
+            HTML+= payment.giver.pseudo+" a donné "+payment.cost+"€ <br/>";
+            HTML+= payment.reciever.pseudo+" a recu "+payment.cost+"€ <br/>";
+            HTML+="</div>";
+
+
             var newDiv = document.createElement('div');
+            newDiv.setAttribute("onClick","showHiddenDiv(this)");
             document.getElementById('divDashboardGroup').appendChild(newDiv);
 
             newDiv.innerHTML = HTML;
@@ -228,7 +237,18 @@ angular.module('group').controller('GroupCtrl', [
         }
 
         showHiddenDiv = function(div){
-            div.childNodes[3].classList.toggle('ng-hide');
+            for(var i=0; i<div.childNodes.length;i++){
+                console.log(i);
+                if(typeof div.childNodes[i].classList !== 'undefined' ){
+                    for(var j=0; j< div.childNodes[i].classList.length; j++){
+                        if(div.childNodes[i].classList[j] == 'info'){
+                            div.childNodes[i].classList.toggle('ng-hide');
+                        }
+                    } 
+                }
+            }
         }
+
+        
     }
 ]);
