@@ -16,12 +16,13 @@ router.post('/connection', function(req, res) {
 	var query = {
         "mail": req.body.mail,
         "pass": req.body.pass
-	};	
-
+	};
+	
     users.find(query,function(err, doc) {
         if (err) {
             return (err);
         }
+        req.session.user = doc;
         res.send(doc);
     });
 });

@@ -5,10 +5,8 @@ var users = mongoose.model('User');
 var groups = mongoose.model('Group');
 
 router.get('/userProfile/:id', function(req, res) {
-	groups.find(function(err, doc) {
-        if (err) {
-            return (err);
-        }
+	users.find(function(err, doc) {
+        if (err) { return (err); }
         res.json(doc);
     });
 });
@@ -26,19 +24,29 @@ router.delete('/userProfile/:id/:mail', function(req, res) {
                 if(size == 0){
                     res.send("Vous n'avez pas d'ami");
                 }else{
-                    //Search the friend in your friends list
+                    // recherche l'ami à supprimer dans la liste d'amis
                     newfriendUser = currentUser.friends.filter(function(element){
                         return (element.mail != req.params.mail);
                     })
                     if(size != newfriendUser.length){
+                        //mise à jour de la liste d'amis de l'utilisateur en cours
                         users.findOneAndUpdate({"_id" : currentUser._id}, {$set: {"friends": newfriendUser}}, {new: true}, function(err, doc) {
                         });
 
                         newfriend = doc.friends.filter(function(element){
                             return (element.mail != currentUser.mail);
                         })
+                        // mise à jour de la liste d'amis de l'amis à supprimer
                         users.findOneAndUpdate({"_id" : doc._id}, {$set: {"friends": newfriend}}, {new: true}, function(err, doc) {
                         });
+
+                        //supression du groupe FRIEND avec les deux utilisateurs
+                        users.findOne({"_id" : currentUser._id}, function(err, user1) {
+                            users.findOne({"_id" : doc._id}, function(err, user2) {
+                                groups.findOneAndRemove({"users.mail": user1.mail, "users.mail": user2.mail, "type": "FRIEND"}, function(err, doc) {});
+                            });
+                        });
+
                         res.send("Utilisateur retiré de votre liste d'ami");
                     }else{
                         res.send("L'utilisateur n'est pas votre ami");
@@ -93,7 +101,22 @@ router.put('/userProfile/:id', function(req, res) {
                             updatefriend.push({"_id": friend._id, "mail": friend.mail, "pseudo": friend.pseudo});
                         }
                     });
-                    users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, {new: true}, function(err, doc) {
+                    users.findOneAndUpdate({"_id" : user._id}, {$set: {"friends": updatefriend}}, option, function(err, doc) {
+                    });
+                });
+            });
+            groups.find(function(err, groupsresult) {
+                if (err) { return (err); }
+                groupsresult.forEach(function(element1, index1, array1){
+                    membersgroup = [];
+                    element1.users.forEach(function(element2, index2, array2){
+                        if(element2._id == id){
+                            membersgroup.push({"_id" : element2._id, "pseudo": req.body.pseudo, "mail": req.body.mail});
+                        }else{
+                            membersgroup.push({"_id": element2._id, "pseudo": element2.pseud, "mail": element2.mail});
+                        }
+                    });
+                    groups.findOneAndUpdate({"_id" : element1._id}, {$set: {"users" : membersgroup}}, option, function(err, doc){
                     });
                 });
             });
@@ -130,7 +153,14 @@ router.put('/userProfile/:id', function(req, res) {
                             if (err) { return err; }
                             users.findOneAndUpdate({"_id" : friend._id}, {$push: {"friends": currentUser}}, option, function(err, doc) {
                                 if (err) { return err; }
-                                res.send("Ami(e) ajouté(e)");
+                                    var group = new groups({'type' : "FRIEND", 'name' : ""+friend._id+currentUser._id, "users" : [friend, currentUser]});
+                                    group.save(function(err, group) {
+                                    if (err) {
+                                        return next(err);
+                                    }
+                                 res.send("Ami(e) ajouté(e)");   
+                            });
+
                             });
                         });
                     }else{
@@ -147,7 +177,10 @@ router.put('/userProfile/:id', function(req, res) {
 });
 
 router.post('/userProfile/:id', function(req, res, next) {
-    var group = new groups(req.body);
+    var group = new groups;
+    group.name=req.body.name;
+    group.type = "GROUP";
+    group.users.addToSet(req.body.users);
 
     var query = {
         "name": req.body.name,
@@ -180,8 +213,10 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
     };
     var option = {new: true};
 
+    // pas d'auto ajout dans un groupe
     if(friendMail == req.body.userMail){
         res.send("Vous ne pouvez pas vous ajouter à ce groupe");
+    // si on essaie d'ajouter un autre utilisateur
     }else{
         groups.findOne({"name" : groupName}, function(err, doc){
             if (err) {return err;}
@@ -206,10 +241,11 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
                     }
 
                     var insertInlist = function(friends){
-                        //Check if the current user is in the group (means allowed to add someone)
+                        // vérifie si l'utilisateur courant est déjà dans le groupe
                         if(isIn){
-                            //Check if the guy is already in the group
+                            // vérifie si l'utilisateur à ajouter n'est pas déjà dans le groupe
                             if(!friendIsIn){              
+                                // vérifie si il y a un utilisateur à ajouter
                                 if(friends != null){
                                     var friend = {
                                     '_id' : friends._id,
@@ -240,19 +276,30 @@ router.put('/userProfile/:id/:add', function(req, res, next) {
         });
     }  
     var addRelationship = function (element, friend) {
+        // vérifie que le mail de l'utilisateur à ajouter est différent de l'utilisateur du groupe sélectionné
         if (element.mail != friend.mail){
             var isfriend = false;
+            // récupère l'utilisateur à ajouter
             users.findOne({"mail" : friend.mail}, function(err, userFriend){
                 userFriend.friends.forEach(function(ami, index, array){
+                    // vérifie si l'utilisateur du groupe sélectionné fait déjà parti des amis de l'utilisateur ajouté
                     if(ami.mail == element.mail){
                         isfriend = true;
                     }
                 });
+
+                // si l'utilisateur du groupe sélectionné ne fait pas parti des amis de l'utilisateur ajouté alors on l'ajoute
                 if(!isfriend){
                     users.findOneAndUpdate({"_id" : friend._id}, {$push: {"friends": element}}, option, function(err, doc) {
                         if (err) { return err; }
                         users.findOneAndUpdate({"_id" : element._id}, {$push: {"friends": friend}}, option, function(err, doc) {
                             if (err) { return err; }
+                            var group = new groups({'type' : "FRIEND", 'name' : ""+friend._id+element._id, "users" : [friend, element]});
+                            group.save(function(err, group) {
+                                if (err) {
+                                    return next(err);
+                                }
+                            });
                         });
                     });
                 }

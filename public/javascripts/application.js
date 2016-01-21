@@ -1,7 +1,7 @@
 var mainApplicationModuleName = 'mean';
 
-var mainApplicationModule = angular.module(mainApplicationModuleName, ['ui.router','home','register','connection','userProfile']);
-
+var mainApplicationModule = angular.module(mainApplicationModuleName, 
+                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','allExpenses','edit']);
 //Setup a state called home
 mainApplicationModule.config([
 '$stateProvider',
@@ -11,18 +11,17 @@ function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/home',
-      templateUrl: 'javascripts/home/home.client.view.html',
-      controller: 'HomeCtrl',
-  	  resolve: {
-    		homePromise: ['home', function(home){
+      views : {wrapper_page : {templateUrl: 'javascripts/home/home.client.view.html', controller: 'HomeCtrl'},
+      side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
+      resolve: {
+        homePromise: ['home', function(home){
           return home.getAll();
-    		}]
-  	  }
+        }]
+      }
     })
     .state('register', {
       url: '/register',
-      templateUrl: 'javascripts/register/register.client.view.html',
-      controller: 'RegisterCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/register/register.client.view.html', controller: 'RegisterCtrl'}},
       resolve: {
         registerPromise: ['register', function(register){
           return register.getAll();
@@ -31,8 +30,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('connection/q', {
       url: '/connection/:q',
-      templateUrl: 'javascripts/connection/connection.client.view.html',
-      controller: 'ConnectionCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/connection/connection.client.view.html', controller: 'ConnectionCtrl'}},
       resolve: {
         connectionPromise: ['connection', function(connection){
           return connection.getAll();
@@ -41,8 +39,7 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('connection', {
       url: '/connection',
-      templateUrl: 'javascripts/connection/connection.client.view.html',
-      controller: 'ConnectionCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/connection/connection.client.view.html', controller: 'ConnectionCtrl'}},
       resolve: {
         connectionPromise: ['connection', function(connection){
           return connection.getAll();
@@ -51,8 +48,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/mail', {
       url: '/userProfile/:id/:mail',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -61,8 +58,8 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id/adduser', {
       url: '/userProfile/:id/:adduser',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+            side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
@@ -71,40 +68,67 @@ function($stateProvider, $urlRouterProvider) {
     })
     .state('userProfile/id', {
       url: '/userProfile/:id',
-      templateUrl: 'javascripts/userProfile/userProfile.client.view.html',
-      controller: 'UserProfileCtrl',
+      views : {wrapper_page : {templateUrl: 'javascripts/userProfile/userProfile.client.view.html', controller: 'UserProfileCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
       resolve: {
         connectionPromise: ['$stateParams','userProfile', function($stateParams, userProfile){
           return userProfile.getAll();
         }]
       }      
     })
-
+    .state('group/id', {
+      url: '/group/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/group/group.client.view.html', controller: 'GroupCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},
+      resolve: {
+        groupPromise: ['$stateParams', 'group', function($stateParams, group){
+          return group.getOne($stateParams.id);
+        }]
+      }     
+    })
+    .state('friend/id', {
+      url: '/friend/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/friend/friend.client.view.html', controller: 'FriendCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'friend', function($stateParams, friend){
+          return friend.getOne($stateParams.id);
+        }]
+      }     
+    })
+    .state('edit/bill/id/idbill', {
+      url: '/edit/bill/:id/:idbill',
+      views : {wrapper_page : {templateUrl: 'javascripts/edit/edit.client.bill.view.html', controller: 'EditCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'edit', function($stateParams, edit){
+          return edit.getBill($stateParams.id, $stateParams.idbill);
+        }]
+      }     
+    })
+    .state('edit/payment/id/idbill', {
+      url: '/edit/payment/:id/:idbill',
+      views : {wrapper_page : {templateUrl: 'javascripts/edit/edit.client.payment.view.html', controller: 'EditCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'edit', function($stateParams, edit){
+          return edit.getPayment($stateParams.id, $stateParams.idbill);
+        }]
+      }     
+    })
+    .state('allExpenses/id', {
+      url: '/allExpenses/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/allExpenses/allExpenses.client.view.html', controller: 'AllExpensesCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams','allExpenses', function($stateParams, allExpenses){
+          return allExpenses.get($stateParams.id);
+        }]
+      }     
+    })
     // redirect unspecified routes
     $urlRouterProvider.otherwise('home');
 }]);
-
-function loadSession(){
-  if(sessionStorage.getItem('id') != null){
-    document.getElementById("getPseudo").innerHTML = sessionStorage.getItem('pseudo')+" ";
-    document.getElementById("hideConnected").classList.add('ng-hide');
-    document.getElementById("hideNotConnected").classList.remove('ng-hide');
-  }else if(document.location.href!="http://localhost:3000/#/register"){
-    document.location.href = "http://localhost:3000/#/connection";
-    document.getElementById("hideConnected").classList.remove('ng-hide');
-    document.getElementById("hideNotConnected").classList.add('ng-hide');
-  }
-};
-
-function userProfile(){
-  document.location.href = "#/userProfile/"+sessionStorage.getItem('id');
-}
-
-function deleteSession(){
-  sessionStorage.clear();
-  alert('Deconnexion réussie !');
-  document.location.href = "/"
-}
 
 angular.element(document).ready(function() {
   angular.bootstrap(document, [mainApplicationModuleName]);

@@ -5,6 +5,7 @@ require('./models/Group');
 require('./models/Payment');
 require('./models/Bill');
 mongoose.connect('mongodb://localhost/bigpurple52_Web');
+var session = require('express-session');
 
 var express = require('express');
 var path = require('path');
@@ -18,8 +19,21 @@ var home = require('./routes/home.server.route');
 var register = require('./routes/register.server.route');
 var connection = require('./routes/connection.server.route');
 var userProfile = require('./routes/userProfile.server.route');
+var group = require('./routes/group.server.route');
+var friend = require('./routes/friend.server.route');
+var side_menu = require('./routes/side_menu.server.route');
+var allExpenses = require('./routes/allExpenses.server.route');
+var edit = require('./routes/edit.server.route');
 
 var app = express();
+
+var sessionOptions = {
+  secret: "secret",
+  resave : true,
+  saveUninitialized : false
+};
+app.use(session(sessionOptions));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +52,11 @@ app.use('/', home);
 app.use('/', register);
 app.use('/', connection);
 app.use('/', userProfile);
+app.use('/', group);
+app.use('/', friend);
+app.use('/', side_menu);
+app.use('/', allExpenses);
+app.use('/', edit);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

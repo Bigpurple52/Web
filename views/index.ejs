@@ -81,43 +81,21 @@
                     <a href="#/connection"><i class="fa fa-edit fa-fw"></i>connexion</a>
                 </li>
             </ul>
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="#/home"><i class="fa fa-edit fa-fw"></i>Home</a>
-                        </li>
-                        <li>
-                            <a href="#/register"><i class="fa fa-edit fa-fw"></i>register</a>
-                        </li>
-                        <li>
-                            <a href="#/connection"><i class="fa fa-edit fa-fw"></i>connexion</a>
-                        </li>
-                        <li>
-                            <a href="#" onclick="deleteSession()"><i class="fa fa-edit fa-fw"></i>session delete</a>
-                        </li>
-                        <li>
-                            <a href="" onclick="userProfile()"><i class="fa fa-edit fa-fw"></i>user</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
         </nav>
 
+        <div class="navbar-default sidebar" role="navigation">
+            <div class="sidebar-nav navbar-collapse">
+                <div ui-view="side_menu"></div>
+            </div>
+        </div>
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <ui-view></ui-view>
+                    <div ui-view="wrapper_page"></div>
                 </div>
-                <!-- /.col-lg-12 -->
             </div>
 
-            <section ng-view> </section>
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
@@ -156,7 +134,29 @@
 <script src="/javascripts/userProfile/userProfile.client.controller.js"></script>
 <script src="/javascripts/userProfile/userProfile.client.service.js"></script>
 
+<script src="/javascripts/group/group.client.module.js"></script>
+<script src="/javascripts/group/group.client.controller.js"></script>
+<script src="/javascripts/group/group.client.service.js"></script>
+
+<script src="/javascripts/friend/friend.client.module.js"></script>
+<script src="/javascripts/friend/friend.client.controller.js"></script>
+<script src="/javascripts/friend/friend.client.service.js"></script>
+
+<script src="/javascripts/side_menu/side_menu.client.module.js"></script>
+<script src="/javascripts/side_menu/side_menu.client.controller.js"></script>
+<script src="/javascripts/side_menu/side_menu.client.service.js"></script>
+
+<script src="/javascripts/allExpenses/allExpenses.client.module.js"></script>
+<script src="/javascripts/allExpenses/allExpenses.client.controller.js"></script>
+<script src="/javascripts/allExpenses/allExpenses.client.service.js"></script>
+
+<script src="/javascripts/edit/edit.client.module.js"></script>
+<script src="/javascripts/edit/edit.client.controller.js"></script>
+<script src="/javascripts/edit/edit.client.service.js"></script>
+
+<script src="/javascripts/display.js"></script>
 
 <script src="/javascripts/application.js"></script>
+<script src="/javascripts/index.client.controller.js"></script>
 
 </html>

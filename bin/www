@@ -5,7 +5,7 @@
  */
 
 var app = require('../app');
-var debug = require('debug')('scrum:server');
+var debug = require('debug')('bigpurple52_Web:server');
 var http = require('http');
 
 /**

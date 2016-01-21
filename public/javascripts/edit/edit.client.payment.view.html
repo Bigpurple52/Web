@@ -1,0 +1,35 @@
+<section data-ng-init="init()">
+	<div class="col-lg-10">
+	    <h1 class="page-header">Edit Payment</h1>
+	    <div>
+			<form name="newPaymentForm" role="form" novalidate>
+
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.descriptpayment.$invalid && newPaymentForm.descriptpayment.$dirty, 'has-success': newPaymentForm.descriptpayment.$valid}">
+		            <label for="descriptpayment">Description:</label>
+		            <input type="text" class="form-control" name="descriptpayment" placeholder="Description" ng-model="descriptpayment" required ng-minlength="1" ng-maxlength="250">
+		                <span class="error" ng-show="newPaymentForm.descriptpayment.$error.required && newPaymentForm.descriptpayment.$dirty">Ce champ doit être rempli</span>
+		                <span class="error" ng-show="newPaymentForm.descriptpayment.$error.maxlength">Description trop long (Maximum 250 caractères)</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.montantpayment.$invalid && newPaymentForm.montantpayment.$dirty, 'has-success': newPaymentForm.montantpayment.$valid}">
+		            <label for="montantpayment">Montant:</label>
+		            <input type="number" class="form-control" name="montantpayment" placeholder="Montant" ng-model="montantpayment" required>
+		                <span class="error" ng-show="newPaymentForm.montantpayment.$error.required && newPaymentForm.montantpayment.$dirty">Ce champ doit être rempli</span>
+		            </input>
+		        </div>
+		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.giverpayment.$invalid && newPaymentForm.giverpayment.$dirty, 'has-success': newPaymentForm.giverpayment.$valid}">
+		            <label for="giverpayment">Donne: </label>
+		            <select class=form-control ng-change ="selectGiver()" ng-model="giverpayment" ng-options="user as user.pseudo for user in group.users track by user._id">
+		            </select>
+		        </div>
+			    <div class="form-friend" ng-class="{'has-error': newPaymentForm.recieverpayment.$invalid && newPaymentForm.recieverpayment.$dirty, 'has-success': newPaymentForm.recieverpayment.$valid}">
+			        <label for="recieverpayment">Recoit: </label>
+					<select class=form-control ng-model="recieverpayment" ng-options="user as user.pseudo for user in listReciever track by user._id">
+					</select>
+			    </div>
+			    <button class="btn btn-primary" ng-click="EditPayment();" ng-disabled="newPaymentForm.$invalid">Enregistrer</button>
+			    <button class="btn btn-warning" ng-click="AnnulerEdit();">Annuler</button>
+			</form>
+		</div>
+	</div>
+</section>
