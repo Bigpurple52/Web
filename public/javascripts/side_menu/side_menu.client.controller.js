@@ -33,9 +33,9 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 			return isMe;
 		}
 
-		$scope.dashboard = function (){
-			console.log("#/dashboard/"+sessionStorage.getItem('id'));
-  			document.location.href = "#/dashboard/"+sessionStorage.getItem('id');
+		$scope.allExpenses = function (){
+			console.log("#/allExpenses/"+sessionStorage.getItem('id'));
+  			document.location.href = "#/allExpenses/"+sessionStorage.getItem('id');
 		}
 	}
 ]);

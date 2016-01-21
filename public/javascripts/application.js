@@ -1,7 +1,7 @@
 var mainApplicationModuleName = 'mean';
 
 var mainApplicationModule = angular.module(mainApplicationModuleName, 
-                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','dashboard','edit']);
+                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','allExpenses','edit']);
 //Setup a state called home
 mainApplicationModule.config([
 '$stateProvider',
@@ -106,13 +106,13 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }     
     })
-    .state('dashboard/id', {
-      url: '/dashboard/:id',
-      views : {wrapper_page : {templateUrl: 'javascripts/dashboard/dashboard.client.view.html', controller: 'DashboardCtrl'},
+    .state('allExpenses/id', {
+      url: '/allExpenses/:id',
+      views : {wrapper_page : {templateUrl: 'javascripts/allExpenses/allExpenses.client.view.html', controller: 'AllExpensesCtrl'},
                side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
       resolve: {
-        groupPromise: ['$stateParams','dashboard', function($stateParams, dashboard){
-          return dashboard.get($stateParams.id);
+        groupPromise: ['$stateParams','allExpenses', function($stateParams, allExpenses){
+          return allExpenses.get($stateParams.id);
         }]
       }     
     })
