@@ -203,7 +203,7 @@ angular.module('group').controller('GroupCtrl', [
             for (var user of bill.users){
                 HTML+= user.pseudo +" doit "+ user.cost+"€ <br/>";
             }
-            HTML+="<button class=\"btn\" onClick=\"\">Suppression </button>";
+            HTML+="<a href=\"#/edit/bill/"+relation._id+"/"+bill.identifier+"\"><button class=\"btn\" onClick=\"\">Edit </button></a>";
             HTML+="</div>";
 
             var newDiv = document.createElement('div');
@@ -223,6 +223,7 @@ angular.module('group').controller('GroupCtrl', [
             HTML+="Description: "+payment.descript+ "<br/>";
             HTML+= payment.giver.pseudo+" a donné "+payment.cost+"€ <br/>";
             HTML+= payment.reciever.pseudo+" a recu "+payment.cost+"€ <br/>";
+            HTML+="<a href=\"#/edit/payment/"+relation._id+"/"+payment.identifier+"\"><button class=\"btn\" onClick=\"\">Edit </button></a>";
             HTML+="</div>";
 
 
@@ -233,7 +234,6 @@ angular.module('group').controller('GroupCtrl', [
             newDiv.innerHTML = HTML;
         }
 
-        // PAS TESTER
         calculateBalanceForOneBill= function(bill){
             var mailCurrentUser = sessionStorage.getItem('mail');
             var res = 0;
