@@ -113,10 +113,40 @@ router.put('/userProfile/:id', function(req, res) {
                         if(element2._id == id){
                             membersgroup.push({"_id" : element2._id, "pseudo": req.body.pseudo, "mail": req.body.mail});
                         }else{
-                            membersgroup.push({"_id": element2._id, "pseudo": element2.pseud, "mail": element2.mail});
+                            membersgroup.push({"_id": element2._id, "pseudo": element2.pseudo, "mail": element2.mail});
                         }
                     });
-                    groups.findOneAndUpdate({"_id" : element1._id}, {$set: {"users" : membersgroup}}, option, function(err, doc){
+                    var paymentsUpdate = [];
+
+                    for(var payment of element1.payments){
+                        if(payment.giver._id == id){
+                                payment.giver= {"_id" : id, "pseudo": req.body.pseudo, "mail": req.body.mail};
+                        }
+                        if(payment.reciever._id==id){
+                                payment.reciever={"_id" : id, "pseudo": req.body.pseudo, "mail": req.body.mail};
+                        }
+                        paymentsUpdate.push(payment);
+                    }
+
+                    var billsUpdate = [];
+
+                    for(var bill of element1.bills){
+                        if(bill.buyer._id== id){
+                            bill.buyer= {"_id" : id, "pseudo": req.body.pseudo, "mail": req.body.mail, "cost":  bill.buyer.cost};
+                        }
+                        var usersUpdate = [];
+                        for(var user of bill.users){
+                            if(user._id == id){
+                                user = {"_id" : id, "pseudo": req.body.pseudo, "mail": req.body.mail, "cost": user.cost};
+                            }
+                            usersUpdate.push(user);
+                        }
+                        bill.users = usersUpdate;
+                        billsUpdate.push(bill);
+                    }
+
+
+                    groups.findOneAndUpdate({"_id" : element1._id}, {$set: {"users" : membersgroup,"bills":billsUpdate, "payments":paymentsUpdate }}, option, function(err, doc){
                     });
                 });
             });
