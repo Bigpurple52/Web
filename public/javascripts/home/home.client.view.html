@@ -28,13 +28,13 @@
 	    	<div class="col-lg-5">
 	    		<h2>A qui je doit de l'argent</h2>
 	    		<div ng-repeat="d in listYouOwe">
-				1
+				{{DisplayYouOwe(d)}}
 				</div>
 			</div>
 	    	<div class="col-lg-4">
 	    		<h2>Qui me doit de l'argent</h2>
 	    		<div ng-repeat="d in listYouAreOwned">
-				1
+				{{DisplayYouAreOwned(d)}}
 				</div>
 	    	</div>
 	    </div>

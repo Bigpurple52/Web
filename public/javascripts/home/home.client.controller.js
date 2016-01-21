@@ -47,7 +47,9 @@ angular.module('home').controller('HomeCtrl', [
                     var tmp = $scope.calculateMyBalance(group);
                     if(tmp<0){
                         youOwe -= tmp;
-                        listYouOwe.push({'relation': group, 'cost' : tmp});
+                        if(tmp != 0){
+                            listYouOwe.push({'relation': group, 'cost' : tmp});
+                        }
                     }else{
                         youAreOwned += tmp; 
                         listYouAreOwned.push({'relation': group, 'cost' : tmp});   
@@ -60,7 +62,9 @@ angular.module('home').controller('HomeCtrl', [
                     var tmp = $scope.calculateMyBalance(friend);
                     if(tmp<0){
                         youOwe -= tmp;
-                        listYouOwe.push({'relation': friend, 'cost' : tmp});
+                        if(tmp != 0){
+                            listYouOwe.push({'relation': friend, 'cost' : tmp});
+                        }
                     }else{
                         youAreOwned += tmp;
                          listYouAreOwned.push({'relation': friend, 'cost' : tmp});   
@@ -111,8 +115,8 @@ angular.module('home').controller('HomeCtrl', [
 
             return res;
         }
-/*
-        $scope.DisplayDouble = function(d){
+
+        $scope.DisplayYouAreOwned = function(d){
             var relation = d.relation;
             var cost = d.cost;
             console.log("Double");
@@ -120,14 +124,31 @@ angular.module('home').controller('HomeCtrl', [
             if(relation.type == 'FRIEND'){
                 for (var user of relation.users){
                     if(user.mail != sessionStorage.getItem('mail')){
-                       // return "Ton ami(e)" + "\""user.pseudo+"\" te doit "+ (-1)*cost+"€";
+                        return "Ton ami(e) "+user.pseudo+" te doit "+ cost+"€";
                     }
                 }
             }
             if(relation.type == 'GROUP'){
-                //return "Le group" + "\""relation.name+"\" te doit "+ (-1)*cost+"€";
+                return "Le groupe \""+relation.name+"\" te doit "+ cost+"€";
             }
-        }*/
+        }
+
+        $scope.DisplayYouOwe = function(d){
+            var relation = d.relation;
+            var cost = d.cost;
+            console.log("Double");
+            console.log(relation);
+            if(relation.type == 'FRIEND'){
+                for (var user of relation.users){
+                    if(user.mail != sessionStorage.getItem('mail')){
+                        return "Tu dois "+(-1) *cost+"€ à ton ami(e) "+user.pseudo;
+                    }
+                }
+            }
+            if(relation.type == 'GROUP'){
+                return "Tu dois "+ (-1) *cost+"€ dans le groupe " + "\""+relation.name+"\"";
+            }
+        }
 
     }
 ]);
