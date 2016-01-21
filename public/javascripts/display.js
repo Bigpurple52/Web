@@ -29,6 +29,7 @@ DisplayBillHTML = function(relation,bill){
         HTML+= user.pseudo +" doit "+ user.cost+"€ <br/>";
     }
     HTML+="<a href=\"#/edit/bill/"+relation._id+"/"+bill.identifier+"\"><button class=\"btn\" onClick=\"\">Edit </button></a>";
+    HTML+="<button class=\"btn\" onclick=\"deleteBill(\'"+relation._id+"\' , \'"+bill.identifier+"\')\">Supprimer</button>";
     HTML+="</div>";
 
     var newDiv = document.createElement('div');
@@ -51,7 +52,8 @@ DisplayPaymentHTML= function(relation,payment){
     HTML+="Description: "+payment.descript+ "<br/>";
     HTML+= payment.giver.pseudo+" a donné "+payment.cost+"€ <br/>";
     HTML+= payment.reciever.pseudo+" a recu "+payment.cost+"€ <br/>";
-		HTML+="<a href=\"#/edit/payment/"+relation._id+"/"+payment.identifier+"\"><button class=\"btn\" onClick=\"\">Edit </button></a>";
+	HTML+="<a href=\"#/edit/payment/"+relation._id+"/"+payment.identifier+"\"><button class=\"btn\" onClick=\"\">Edit </button></a>";
+    HTML+="<button class=\"btn\" onclick=\"deletePayment(\'"+relation._id+"\',\'"+payment.identifier+"\')\">Supprimer</button>";
     HTML+="</div>";
 
 

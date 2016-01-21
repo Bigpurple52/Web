@@ -14,6 +14,16 @@ angular.module('group').controller('GroupCtrl', [
             });
         }
 
+        $scope.selectGiver= function(){
+            var listReciev=[];
+            for(user of $scope.group.users){
+              if(user.mail != $scope.giverpayment.mail){
+                listReciev.push(user);
+              }
+            }
+            $scope.listReciever=listReciev;
+        }
+
         $scope.calculateBalance = function(){
             for (var user of $scope.group.users){
                 $scope.balance.set(user.mail,0);
@@ -171,6 +181,26 @@ angular.module('group').controller('GroupCtrl', [
                     DisplayTradeHTML($scope.group,o);
                 }
             }
+        }
+
+        deleteBill = function(idgroup, idbill){
+            group.deleteBill({
+                idgroup: idgroup,
+                idbill: idbill
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
+        }
+
+        deletePayment = function(idgroup, idpayment){
+            group.deletePayment({
+                idgroup: idgroup,
+                idpayment: idpayment
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
         }
     }
 ]);

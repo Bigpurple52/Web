@@ -24,6 +24,7 @@ var friend = require('./routes/friend.server.route');
 var side_menu = require('./routes/side_menu.server.route');
 var allExpenses = require('./routes/allExpenses.server.route');
 var edit = require('./routes/edit.server.route');
+var delet = require('./routes/delete.server.route');
 
 var app = express();
 
@@ -57,6 +58,7 @@ app.use('/', friend);
 app.use('/', side_menu);
 app.use('/', allExpenses);
 app.use('/', edit);
+app.use('/', delet);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
