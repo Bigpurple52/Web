@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "postinstall": "mongo bigpurple52_Web < scripts/postinstall.js"
+    "postinstall": "mongorestore --db bigpurple52_Web scripts/dump/bigpurple52_Web/"
   },
   "dependencies": {
     "body-parser": "~1.13.2",
