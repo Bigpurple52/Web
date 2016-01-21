@@ -106,6 +106,16 @@ function($stateProvider, $urlRouterProvider) {
         }]
       }     
     })
+    .state('edit/payment/id/idbill', {
+      url: '/edit/payment/:id/:idbill',
+      views : {wrapper_page : {templateUrl: 'javascripts/edit/edit.client.payment.view.html', controller: 'EditCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'edit', function($stateParams, edit){
+          return edit.getPayment($stateParams.id, $stateParams.idbill);
+        }]
+      }     
+    })
     .state('allExpenses/id', {
       url: '/allExpenses/:id',
       views : {wrapper_page : {templateUrl: 'javascripts/allExpenses/allExpenses.client.view.html', controller: 'AllExpensesCtrl'},

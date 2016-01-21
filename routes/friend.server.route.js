@@ -54,6 +54,7 @@ router.put('/friend/:id', function(req, res) {
 		var reciever = req.body.reciever;
 
 		var payment = {
+			  "identifier": null,
 			  "giver": { "_id": null,
 			      "mail": null,
 			      "pseudo": null

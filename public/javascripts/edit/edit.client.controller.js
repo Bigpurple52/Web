@@ -5,9 +5,7 @@ angular.module('edit').controller('EditCtrl', [
 	function($scope, edit) {
     $scope.group = edit.groupbillpayment.group;
   	$scope.billInit = edit.groupbillpayment.bill;
-  	$scope.billModif;
   	$scope.paymentInit = edit.groupbillpayment.payment;
-  	$scope.paymentModif;
     $scope.balance = new Map();
     $scope.listReciever;
 
@@ -21,23 +19,27 @@ angular.module('edit').controller('EditCtrl', [
         }
 
         if(typeof $scope.paymentInit != 'undefined'){
-
+            $scope.descriptpayment = $scope.paymentInit.descript;
+            $scope.montantpayment = $scope.paymentInit.cost;
+            $scope.giverpayment = $scope.paymentInit.giver;
+            $scope.recieverpayment = $scope.paymentInit.reciever;
+            $scope.selectGiver();
         }
       }
 
       $scope.selectGiver= function(){
-        /*console.log($scope.buyerbill);
-        $scope.giverpayment=null;
+        console.log("selectGiver");
+        console.log($scope.giverpayment);
         var listReciev=[];
         for(user of $scope.group.users){
-          if(user.mail != $scope.buyerbill.mail){
+          if(user.mail != $scope.giverpayment.mail){
             listReciev.push(user);
           }
         }
-        $scope.listReciever=listReciev;*/
+        $scope.listReciever=listReciev;
       }
 
-      $scope.EditBillFriend = function(){
+      $scope.EditBill = function(){
         if (!$scope.group._id || !$scope.descriptbill || !$scope.montantbill || !$scope.buyerbill || !$scope.ownerbill) {
             return;
         }
@@ -63,7 +65,46 @@ angular.module('edit').controller('EditCtrl', [
           users : tmpUsers
         }, function(data){
           alert("Modification effectuée");
+          if($scope.group.type=="FRIEND"){
             document.location.href='#/friend/'+$scope.group._id;
+          }else if($scope.group.type=="GROUP"){
+            document.location.href='#/group/'+$scope.group._id;
+          }
+        });
+      }
+
+      $scope.EditPayment = function(){
+        console.log("début édit payment");
+        if (!$scope.group._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
+            return;
+        }
+        var identifier = $scope.paymentInit.identifier;
+        var tmpGroupId = $scope.group._id;
+        var tmpGiver = $scope.giverpayment;
+        var tmpDescript = $scope.descriptpayment;
+        var tmpCost = $scope.montantpayment;
+        var tmpReciever = $scope.recieverpayment;
+        $scope.descriptpayment="";
+        $scope.montantpayment="";
+        $scope.giverpayment="";
+        $scope.recieverpayment="";
+
+        edit.editPayment({
+          identifier: identifier,
+          typebp : "payment",
+          groupeid : tmpGroupId,
+          giver : tmpGiver,
+          date : $scope.paymentInit.date,
+          descript :tmpDescript ,
+          cost : tmpCost,
+          reciever : tmpReciever,
+        }, function(data){
+          alert("Modification effectuée");
+          if($scope.group.type=="FRIEND"){
+            document.location.href='#/friend/'+$scope.group._id;
+          }else if($scope.group.type=="GROUP"){
+            document.location.href='#/group/'+$scope.group._id;
+          }
         });
       }
 

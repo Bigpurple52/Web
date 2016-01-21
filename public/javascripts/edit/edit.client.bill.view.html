@@ -27,7 +27,7 @@
 					<select multiple class=form-control ng-model="ownerbill" ng-options="user as user.pseudo for user in group.users track by user._id">
 					</select>
 			    </div>
-			    <button class="btn btn-primary" ng-click="EditBillFriend(); bill = false;" ng-disabled="newBillForm.$invalid">Enregistrer</button>
+			    <button class="btn btn-primary" ng-click="EditBill();" ng-disabled="newBillForm.$invalid">Enregistrer</button>
 			    <button class="btn btn-warning" ng-click="bill = false">Annuler</button>
 			</form>
 		</div>
