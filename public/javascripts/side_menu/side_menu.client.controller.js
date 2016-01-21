@@ -34,7 +34,6 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 		}
 
 		$scope.allExpenses = function (){
-			console.log("#/allExpenses/"+sessionStorage.getItem('id'));
   			document.location.href = "#/allExpenses/"+sessionStorage.getItem('id');
 		}
 	}

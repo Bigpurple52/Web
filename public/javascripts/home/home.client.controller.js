@@ -47,12 +47,12 @@ angular.module('home').controller('HomeCtrl', [
                     var tmp = $scope.calculateMyBalance(group);
                     if(tmp<0){
                         youOwe -= tmp;
-                        if(tmp != 0){
-                            listYouOwe.push({'relation': group, 'cost' : tmp});
-                        }
+                        listYouOwe.push({'relation': group, 'cost' : tmp});
                     }else{
                         youAreOwned += tmp; 
-                        listYouAreOwned.push({'relation': group, 'cost' : tmp});   
+                        if(tmp != 0){
+                            listYouAreOwned.push({'relation': group, 'cost' : tmp});
+                        }   
                     }
                 }
             }
@@ -62,20 +62,17 @@ angular.module('home').controller('HomeCtrl', [
                     var tmp = $scope.calculateMyBalance(friend);
                     if(tmp<0){
                         youOwe -= tmp;
-                        if(tmp != 0){
-                            listYouOwe.push({'relation': friend, 'cost' : tmp});
-                        }
+                        listYouOwe.push({'relation': friend, 'cost' : tmp});
                     }else{
                         youAreOwned += tmp;
-                         listYouAreOwned.push({'relation': friend, 'cost' : tmp});   
+                        if(tmp != 0){
+                         listYouAreOwned.push({'relation': friend, 'cost' : tmp});
+                        }   
                     }
                 }
             }
             $scope.listYouAreOwned =listYouAreOwned;
             $scope.listYouOwe = listYouOwe;
-
-            console.log(listYouAreOwned);
-            console.log(listYouOwe);
 
             $scope.youOwe = youOwe;
             $scope.youAreOwned = youAreOwned;
@@ -119,8 +116,6 @@ angular.module('home').controller('HomeCtrl', [
         $scope.DisplayYouAreOwned = function(d){
             var relation = d.relation;
             var cost = d.cost;
-            console.log("Double");
-            console.log(relation);
             if(relation.type == 'FRIEND'){
                 for (var user of relation.users){
                     if(user.mail != sessionStorage.getItem('mail')){
@@ -136,8 +131,6 @@ angular.module('home').controller('HomeCtrl', [
         $scope.DisplayYouOwe = function(d){
             var relation = d.relation;
             var cost = d.cost;
-            console.log("Double");
-            console.log(relation);
             if(relation.type == 'FRIEND'){
                 for (var user of relation.users){
                     if(user.mail != sessionStorage.getItem('mail')){
