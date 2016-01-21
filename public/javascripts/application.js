@@ -1,7 +1,7 @@
 var mainApplicationModuleName = 'mean';
 
 var mainApplicationModule = angular.module(mainApplicationModuleName, 
-                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','dashboard']);
+                            ['ui.router','home','register','connection','userProfile','group','friend','side_menu','dashboard','edit']);
 //Setup a state called home
 mainApplicationModule.config([
 '$stateProvider',
@@ -93,6 +93,16 @@ function($stateProvider, $urlRouterProvider) {
       resolve: {
         groupPromise: ['$stateParams', 'friend', function($stateParams, friend){
           return friend.getOne($stateParams.id);
+        }]
+      }     
+    })
+    .state('edit/bill/id/idbill', {
+      url: '/edit/bill/:id/:idbill',
+      views : {wrapper_page : {templateUrl: 'javascripts/edit/edit.client.bill.view.html', controller: 'EditCtrl'},
+               side_menu : {templateUrl: 'javascripts/side_menu/side_menu.html', controller: 'Side_menuCtrl'}},    
+      resolve: {
+        groupPromise: ['$stateParams', 'edit', function($stateParams, edit){
+          return edit.getBill($stateParams.id, $stateParams.idbill);
         }]
       }     
     })

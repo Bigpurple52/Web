@@ -1,0 +1,35 @@
+<section data-ng-init="init()">
+	<div class="col-lg-10">
+	    <h1 class="page-header">Edit Bill</h1>
+	    <div>
+			<form name="newBillForm" role="form" novalidate>
+
+		    	<div class="form-group" ng-class="{'has-error': newBillForm.descriptbill.$invalid && newBillForm.descriptbill.$dirty, 'has-success': newBillForm.descriptbill.$valid}">
+		            <label for="descriptbill">Description:</label>
+		            <input type="text" class="form-control" name="descriptbill" placeholder="Description" ng-model="descriptbill" required ng-minlength="1" ng-maxlength="250">
+		                <span class="error" ng-show="newBillForm.descriptbill.$error.required && newBillForm.descriptbill.$dirty">Ce champ doit être rempli</span>
+		                <span class="error" ng-show="newBillForm.descriptbill.$error.maxlength">Description trop long (Maximum 250 caractères)</span>
+		            </input>
+		        </div>
+		    	<div class="form-group" ng-class="{'has-error': newBillForm.montantbill.$invalid && newBillForm.montantbill.$dirty, 'has-success': newBillForm.montantbill.$valid}">
+		            <label for="montantbill">Montant:</label>
+		            <input type="number" class="form-control" name="montantbill" placeholder="Montant" ng-model="montantbill" required>
+		                <span class="error" ng-show="newBillForm.montantbill.$error.required && newBillForm.montantbill.$dirty">Ce champ doit être rempli</span>
+		            </input>
+		        </div>
+		    	<div class="form-group" ng-class="{'has-error': newBillForm.buyerbill.$invalid && newBillForm.buyerbill.$dirty, 'has-success': newBillForm.buyerbill.$valid}">
+		            <label for="buyerbill">Celui qui paye: </label>
+		            <select class=form-control ng-model="buyerbill" ng-options="user as user.pseudo for user in group.users track by user._id">
+		            </select>
+		        </div>
+			    <div class="form-group" ng-class="{'has-error': newBillForm.ownerbill.$invalid && newBillForm.ownerbill.$dirty, 'has-success': newBillForm.ownerbill.$valid}">
+			        <label for="ownerbill">Ceux qui sont inclus: </label>
+					<select multiple class=form-control ng-model="ownerbill" ng-options="user as user.pseudo for user in group.users track by user._id">
+					</select>
+			    </div>
+			    <button class="btn btn-primary" ng-click="EditBillFriend(); bill = false;" ng-disabled="newBillForm.$invalid">Enregistrer</button>
+			    <button class="btn btn-warning" ng-click="bill = false">Annuler</button>
+			</form>
+		</div>
+	</div>
+</section>
