@@ -1,6 +1,6 @@
 <section data-ng-init="init()">
 	<div class="col-lg-10">
-	    <h1 class="page-header">Edit Bill</h1>
+	    <h1 class="page-header">Edition facture</h1>
 	    <div>
 			<form name="newBillForm" role="form" novalidate>
 
@@ -23,7 +23,7 @@
 		            </select>
 		        </div>
 			    <div class="form-group" ng-class="{'has-error': newBillForm.ownerbill.$invalid && newBillForm.ownerbill.$dirty, 'has-success': newBillForm.ownerbill.$valid}">
-			        <label for="ownerbill">Ceux qui sont inclus: </label>
+			        <label for="ownerbill">Ceux qui contribuent: </label>
 					<select multiple class=form-control ng-model="ownerbill" ng-options="user as user.pseudo for user in group.users track by user._id">
 					</select>
 			    </div>

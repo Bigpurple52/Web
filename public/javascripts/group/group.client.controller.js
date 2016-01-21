@@ -14,6 +14,16 @@ angular.module('group').controller('GroupCtrl', [
             });
         }
 
+        $scope.selectGiver= function(){
+            var listReciev=[];
+            for(user of $scope.group.users){
+              if(user.mail != $scope.giverpayment.mail){
+                listReciev.push(user);
+              }
+            }
+            $scope.listReciever=listReciev;
+        }
+
         $scope.calculateBalance = function(){
             for (var user of $scope.group.users){
                 $scope.balance.set(user.mail,0);
@@ -26,7 +36,6 @@ angular.module('group').controller('GroupCtrl', [
                     }
                 }
            }
-           console.log($scope.group);
            
             if(typeof $scope.group.payments !== 'undefined' && $scope.group.payments.length>0)
                 for (var payment of $scope.group.payments){
@@ -68,11 +77,9 @@ angular.module('group').controller('GroupCtrl', [
     	}
 
         $scope.CreatePaymentGroup = function(){
-            console.log("début création d'un payment");
             if (!$scope.group._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
                 return;
             }
-            console.log("début après création d'un payment");
 
             var date = new Date();
             var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
@@ -86,7 +93,6 @@ angular.module('group').controller('GroupCtrl', [
             $scope.montantpayment="";
             $scope.giverpayment="";
             $scope.recieverpayment="";
-            console.log("création d'un payment");
             group.createPayment({
                 identifier: identifier,
                 typebp: "payment",
@@ -131,34 +137,26 @@ angular.module('group').controller('GroupCtrl', [
 
             while(bill<$scope.group.bills.length || payment <$scope.group.payments.length){
                 if(bill >= $scope.group.bills.length && payment < $scope.group.payments.length){
-                    console.log("++");
                     res.push($scope.group.payments[payment]);
                     payment += 1;
 
                 }
                 if(payment >= $scope.group.payments.length && bill<$scope.group.bills.length){
-                    console.log("--");
                     res.push($scope.group.bills[bill]);
                     bill += 1;
                 }
                 if(bill<$scope.group.bills.length && payment <$scope.group.payments.length){
                     var DateBill = new Date($scope.group.bills[bill].date);
                     var DatePayment = new Date($scope.group.payments[payment].date);
-                    console.log($scope.group.payments[payment]);
-                    console.log(DatePayment);
-                    console.log("DateBill:"+DateBill.getTime()+",DatePayment:"+DatePayment.getTime() );
                     if(DateBill.getTime() > DatePayment.getTime()){  //Get the time (milliseconds since January 1, 1970)
-                        console.log("+");
                         res.push($scope.group.payments[payment]);
                         payment += 1;
                     }else{
-                        console.log("-");
                         res.push($scope.group.bills[bill]);
                         bill += 1;
                     }
                 }    
             }
-            console.log(res);
             res.reverse();
             $scope.BillPaymentSorted = res;
             callback();
@@ -171,6 +169,26 @@ angular.module('group').controller('GroupCtrl', [
                     DisplayTradeHTML($scope.group,o);
                 }
             }
+        }
+
+        deleteBill = function(idgroup, idbill){
+            group.deleteBill({
+                idgroup: idgroup,
+                idbill: idbill
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
+        }
+
+        deletePayment = function(idgroup, idpayment){
+            group.deletePayment({
+                idgroup: idgroup,
+                idpayment: idpayment
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
         }
     }
 ]);

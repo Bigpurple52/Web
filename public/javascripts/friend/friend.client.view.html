@@ -1,11 +1,11 @@
 <section data-ng-init="init()">
 	<div class="col-lg-10">
-	    <h1 class="page-header">Friend : <span ng-repeat="user in friend.users" ng-if="!isMe(user._id)">{{user.pseudo}}</span></h1>
+	    <h1 class="page-header">Ami : <span ng-repeat="user in friend.users" ng-if="!isMe(user._id)">{{user.pseudo}}</span></h1>
 	    <span ng-hide="payment">
-	    	<button class="btn" ng-click="bill = true" ng-hide='bill'>Create a bill</button>
+	    	<button class="btn" ng-click="bill = true" ng-hide='bill'>Créer une facture</button>
 		</span>
 		<span ng-hide="bill">
-	    	<button class="btn" ng-click="payment = true" ng-hide='payment'>Create a payment</button>
+	    	<button class="btn" ng-click="payment = true" ng-hide='payment'>Créer un remboursement</button>
 		</span>
 	    <div ng-show='bill'>
 			<form name="newBillForm" role="form" novalidate>
@@ -29,7 +29,7 @@
 		            </select>
 		        </div>
 			    <div class="form-friend" ng-class="{'has-error': newBillForm.ownerbill.$invalid && newBillForm.ownerbill.$dirty, 'has-success': newBillForm.ownerbill.$valid}">
-			        <label for="ownerbill">Ceux qui sont inclus: </label>
+			        <label for="ownerbill">Ceux qui contribuent: </label>
 					<select multiple class=form-control ng-model="ownerbill" ng-options="user as user.pseudo for user in friend.users track by user._id">
 					</select>
 			    </div>
@@ -57,12 +57,12 @@
 		        </div>
 		    	<div class="form-friend" ng-class="{'has-error': newPaymentForm.giverpayment.$invalid && newPaymentForm.giverpayment.$dirty, 'has-success': newPaymentForm.giverpayment.$valid}">
 		            <label for="giverpayment">Donne: </label>
-		            <select class=form-control ng-model="giverpayment" ng-options="user as user.pseudo for user in friend.users track by user._id">
+		            <select class=form-control ng-change ="selectGiver()" ng-model="giverpayment" ng-options="user as user.pseudo for user in friend.users track by user._id">
 		            </select>
 		        </div>
 			    <div class="form-friend" ng-class="{'has-error': newPaymentForm.recieverpayment.$invalid && newPaymentForm.recieverpayment.$dirty, 'has-success': newPaymentForm.recieverpayment.$valid}">
 			        <label for="recieverpayment">Recoit: </label>
-					<select class=form-control ng-model="recieverpayment" ng-options="user as user.pseudo for user in friend.users track by user._id">
+					<select class=form-control ng-model="recieverpayment" ng-options="user as user.pseudo for user in listReciever track by user._id">
 					</select>
 			    </div>
 			    <button class="btn btn-primary" ng-click="CreatePaymentFriend(); payment = false;" ng-disabled="newPaymentForm.$invalid">Enregistrer</button>
@@ -80,7 +80,7 @@
 		</div>
 	</div>
 	<div class="col-lg-2">
-		<h2>Groupe Balance</h2>
+		<h2>Balance du groupe</h2>
 		<div ng-repeat="user in friend.users">
 			<div class="row">
 				{{DisplayBalance(user)}}

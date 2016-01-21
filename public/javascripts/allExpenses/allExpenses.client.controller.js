@@ -67,5 +67,25 @@ angular.module('allExpenses').controller('AllExpensesCtrl', [
             }
         }
 
+        deleteBill = function(idgroup, idbill){
+            allExpenses.deleteBill({
+                idgroup: idgroup,
+                idbill: idbill
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
+        }
+
+        deletePayment = function(idgroup, idpayment){
+            allExpenses.deletePayment({
+                idgroup: idgroup,
+                idpayment: idpayment
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
+        }
+
 	}
 ]);

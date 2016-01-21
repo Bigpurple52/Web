@@ -11,6 +11,7 @@ angular.module('side_menu').controller('Side_menuCtrl', [
 				$scope.getFriends();
 				$scope.getGroups();
 			},5000);*/
+			$scope.userID = sessionStorage.getItem('id');
    	 	}
 
 		$scope.getGroups=function (){

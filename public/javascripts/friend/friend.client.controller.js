@@ -14,6 +14,16 @@ angular.module('friend').controller('FriendCtrl', [
             });
         }
 
+        $scope.selectGiver= function(){
+            var listReciev=[];
+            for(user of $scope.friend.users){
+              if(user.mail != $scope.giverpayment.mail){
+                listReciev.push(user);
+              }
+            }
+            $scope.listReciever=listReciev;
+        }
+
 		$scope.isMe=function(id){
 			var isMe=false;
 			if(id==sessionStorage.getItem('id')){
@@ -34,7 +44,6 @@ angular.module('friend').controller('FriendCtrl', [
                     }
                 }
            }
-           console.log($scope.friend);
            
             if(typeof $scope.friend.payments !== 'undefined' && $scope.friend.payments.length>0)
                 for (var payment of $scope.friend.payments){
@@ -76,11 +85,9 @@ angular.module('friend').controller('FriendCtrl', [
     	}
 
         $scope.CreatePaymentFriend = function(){
-            console.log("début création d'un payment");
             if (!$scope.friend._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
                 return;
             }
-            console.log("début après création d'un payment");
 
             var date = new Date();
             var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
@@ -94,7 +101,7 @@ angular.module('friend').controller('FriendCtrl', [
             $scope.montantpayment="";
             $scope.giverpayment="";
             $scope.recieverpayment="";
-            console.log("création d'un payment");
+
             friend.createPayment({
                 identifier: identifier,
                 typebp: "payment",
@@ -154,7 +161,6 @@ angular.module('friend').controller('FriendCtrl', [
                     }
                 }    
             }
-            console.log(res);
             res.reverse();
             $scope.BillPaymentSorted = res;
             callback();
@@ -167,6 +173,25 @@ angular.module('friend').controller('FriendCtrl', [
                     DisplayTradeHTML($scope.friend,o);
                 }
             }
+        }
+        deleteBill = function(idgroup, idbill){
+            friend.deleteBill({
+                idgroup: idgroup,
+                idbill: idbill
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
+        }
+
+        deletePayment = function(idgroup, idpayment){
+            friend.deletePayment({
+                idgroup: idgroup,
+                idpayment: idpayment
+            }, function(data){
+                alert("Modification effectuée");
+                document.location.reload();
+            });
         }
 
     }

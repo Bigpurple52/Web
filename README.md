@@ -1,6 +1,6 @@
 # Web
 
+Puis lancer un navigateur avec localhost:3000
+
 	Utilisateurs :				|	mot de passe :
 	arthur.dessez@test.fr 		|	azer
-	thomas.gittinger@test.fr 	|	azer
-	olivier.constans@test.fr 	|	azer
