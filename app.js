@@ -22,7 +22,7 @@ var userProfile = require('./routes/userProfile.server.route');
 var group = require('./routes/group.server.route');
 var friend = require('./routes/friend.server.route');
 var side_menu = require('./routes/side_menu.server.route');
-var dashboard = require('./routes/dashboard.server.route');
+var allExpenses = require('./routes/allExpenses.server.route');
 
 var app = express();
 
@@ -54,7 +54,7 @@ app.use('/', userProfile);
 app.use('/', group);
 app.use('/', friend);
 app.use('/', side_menu);
-app.use('/', dashboard);
+app.use('/', allExpenses);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
