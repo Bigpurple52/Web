@@ -21,14 +21,11 @@ router.get('/delete/bill/:id/:idbill', function(req, res) {
 });
 
 router.get('/delete/payment/:id/:idpayment', function(req, res) {
-	console.log("début du delete");
 	var paymentsleft = [];
 
     DBgroups.findOne({"_id" : req.params.id}, function(err, group) {
         group.payments.forEach(function(payment, index, array){
-        	console.log("identifiant du paiement actuel : " + payment.identifier + " id url : " + req.params.idpayment);
             if(payment.identifier != req.params.idpayment){
-            	console.log("on rentre dans le if");
                 paymentsleft.push(payment);
             }
         });

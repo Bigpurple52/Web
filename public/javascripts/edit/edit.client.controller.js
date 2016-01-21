@@ -28,8 +28,6 @@ angular.module('edit').controller('EditCtrl', [
       }
 
       $scope.selectGiver= function(){
-        console.log("selectGiver");
-        console.log($scope.giverpayment);
         var listReciev=[];
         for(user of $scope.group.users){
           if(user.mail != $scope.giverpayment.mail){
@@ -74,7 +72,6 @@ angular.module('edit').controller('EditCtrl', [
       }
 
       $scope.EditPayment = function(){
-        console.log("début édit payment");
         if (!$scope.group._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
             return;
         }

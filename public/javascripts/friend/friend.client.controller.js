@@ -44,7 +44,6 @@ angular.module('friend').controller('FriendCtrl', [
                     }
                 }
            }
-           console.log($scope.friend);
            
             if(typeof $scope.friend.payments !== 'undefined' && $scope.friend.payments.length>0)
                 for (var payment of $scope.friend.payments){
@@ -86,11 +85,9 @@ angular.module('friend').controller('FriendCtrl', [
     	}
 
         $scope.CreatePaymentFriend = function(){
-            console.log("début création d'un payment");
             if (!$scope.friend._id || !$scope.descriptpayment || !$scope.montantpayment || !$scope.giverpayment || !$scope.recieverpayment) {
                 return;
             }
-            console.log("début après création d'un payment");
 
             var date = new Date();
             var identifier = Date.now()+""+Math.floor(Math.random() * 100) + 1;
@@ -104,7 +101,7 @@ angular.module('friend').controller('FriendCtrl', [
             $scope.montantpayment="";
             $scope.giverpayment="";
             $scope.recieverpayment="";
-            console.log("création d'un payment");
+
             friend.createPayment({
                 identifier: identifier,
                 typebp: "payment",
@@ -164,7 +161,6 @@ angular.module('friend').controller('FriendCtrl', [
                     }
                 }    
             }
-            console.log(res);
             res.reverse();
             $scope.BillPaymentSorted = res;
             callback();

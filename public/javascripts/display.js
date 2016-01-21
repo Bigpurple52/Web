@@ -21,7 +21,7 @@ DisplayBillHTML = function(relation,bill){
         HTML+=", Tu dois " + (-1)*calculateBalanceForOneBill(bill) +"€ <br/>";
     }
     if(tmp> 0){
-        HTML+=", On te dois "+calculateBalanceForOneBill(bill) +"€ <br/>";
+        HTML+=", On te doit "+calculateBalanceForOneBill(bill) +"€ <br/>";
     }
 
     HTML+="<div class=\"ng-hide info\">";

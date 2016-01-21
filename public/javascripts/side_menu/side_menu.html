@@ -6,7 +6,7 @@
         </li>
     </ul>
     
-    Friends:
+    Amis:
     <ul class="nav" id="side-menu" ng-repeat="friendGroupe in listFriends" >
         <li ng-repeat="user in friendGroupe.users" ng-if="!isMe(user._id)" >
             <a ng-href="#/friend/{{friendGroupe._id}}" >{{user.pseudo}}</a>
@@ -14,12 +14,14 @@
     </ul>
 
     <!-- Add a friend form -->
-    <button class="btn btn-primary">Ajouter un ami</button>
+    <a ng-href="#/userProfile/{{userID}}" >
+        <button class="btn btn-primary">Ajouter un ami</button>
+    </a>
 
 
     <!-- Display the list of the current user's groups -->
     <br>
-    Groups: 
+    Groupes: 
     <ul class="nav" id="side-menu" ng-repeat="group in listGroups">
         <li>
             <a ng-href="#/group/{{group._id}}" >{{group.name}}</a>
@@ -27,6 +29,8 @@
     </ul>
 
     <!-- Create a group -->
-    <button class="btn btn-primary">Créer un groupe</button>
+    <a ng-href="#/userProfile/{{userID}}" >
+        <button class="btn btn-primary">Créer un groupe</button>
+    </a>
 
 </div>
