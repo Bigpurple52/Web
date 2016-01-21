@@ -108,5 +108,13 @@ angular.module('edit').controller('EditCtrl', [
         });
       }
 
+      $scope.AnnulerEdit= function(){
+        if($scope.group.type=="FRIEND"){
+          document.location.href='#/friend/'+$scope.group._id;
+        }else if($scope.group.type=="GROUP"){
+          document.location.href='#/group/'+$scope.group._id;
+        }
+      }
+
     }
 ]);
