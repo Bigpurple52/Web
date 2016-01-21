@@ -126,31 +126,6 @@ angular.module('friend').controller('FriendCtrl', [
             return res;
         }
 
-        $scope.toDateString= function(date){
-            var d = new Date(date)
-            return d.toDateString();
-        }
-
-        $scope.DisplayObject= function(o){
-            var res;
-            if(typeof o.giver !== 'undefined' ){
-                res = $scope.DisplayPayment(o);
-                
-            }else{
-                res = $scope.DisplayBill(o);
-            }
-            return res;
-        }
-
-        $scope.DisplayBill = function(bill){
-            var res = $scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€" ;
-            return res;
-        }
-
-        $scope.DisplayPayment= function(payment){
-            var res = $scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo;
-            return res;
-        }
 
         $scope.sortBillPayment= function(callback){
             var bill =0;
@@ -189,90 +164,9 @@ angular.module('friend').controller('FriendCtrl', [
             var list = $scope.BillPaymentSorted;
             if(typeof list !== 'undefined' && list.length>0){
                 for (var o of list){
-                    DisplayObjectHTML(o);
+                    DisplayTradeHTML($scope.friend,o);
                 }
             }
-        }
-
-        DisplayObjectHTML= function(o){
-            var res;
-            if(typeof o.giver !== 'undefined' ){
-                DisplayPaymentHTML(o);
-                
-            }else{
-                DisplayBillHTML(o);
-            }
-        }
-
-        DisplayBillHTML = function(bill){
-            var HTML = "";
-            HTML+="<span class=\"glyphicon glyphicon-list-alt\"></span>    ";
-            HTML+=$scope.toDateString(bill.date)+"  "+ bill.descript +" : "+bill.buyer.pseudo+" a payé "+ bill.buyer.cost+ "€ <button class=\"btn\">Edition</button>";//+ajoutFormEditBill();
-
-
-            var newDiv = document.createElement('div');
-            document.getElementById('divDashboardGroup').appendChild(newDiv);
-
-            newDiv.innerHTML = HTML;
-        }
-
-        DisplayPaymentHTML= function(payment){
-            var HTML = "";
-            HTML+="<span class=\"glyphicon glyphicon-eur\"></span>    ";
-            HTML+=$scope.toDateString(payment.date)+"  "+payment.descript+" : "+payment.giver.pseudo+" a donné "+payment.cost+"€ à "+payment.reciever.pseudo+"<button onClick=\"testAff("+payment+")\" class=\"btn\">Edition</button>";//+ajoutFormEditBill();
-            var newDiv = document.createElement('div');
-            document.getElementById('divDashboardGroup').appendChild(newDiv);
-
-            newDiv.innerHTML = HTML;
-        }
-
-        // PAS TESTER
-        calculateBalanceForOneBill= function(bill,user){
-            var res = 0;
-            if(bill.buyer.mail == user.mail){
-                res += bill.buyer.cost;
-            }
-            for (var userB of bill.users){
-                if(userB.mail == user.mail){
-                    res -= userB.cost;
-                }
-            }
-        }
-
-        ajoutFormEditBill = function(){
-            var res="";
-            res+=   "<form name=\"editBillForm\" role=\"form\" novalidate>";
-            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.descriptbill.$invalid && editBillForm.descriptbill.$dirty, 'has-success': editBillForm.descriptbill.$valid}\">";
-            res+=           "<label for=\"descriptbill\">Description:</label>";
-            res+=               "<input type=\"text\" class=\"form-control\" name=\"descriptbill\" placeholder=\"Description\" ng-model=\"descriptbill\" required ng-minlength=\"1\" ng-maxlength=\"250\">";
-            res+=                   "<span class=\"error\" ng-show=\"editBillForm.descriptbill.$error.required && newBillForm.descriptbill.$dirty\">Ce champ doit être rempli</span>";
-            res+=                   "<span class=\"error\" ng-show=\"editBillForm.descriptbill.$error.maxlength\">Description trop long (Maximum 250 caractères)</span>";
-            res+=               "</input>";
-            res+=       "</div>";
-            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.montantbill.$invalid && editBillForm.montantbill.$dirty, 'has-success': editBillForm.montantbill.$valid}\">";
-            res+=           "<label for=\"montantbill\">Montant:</label>";
-            res+=               "<input type=\"number\" class=\"form-control\" name=\"montantbill\" placeholder=\"Montant\" ng-model=\"montantbill\" required>";
-            res+=                   "<span class=\"error\" ng-show=\"editBillForm.montantbill.$error.required && editBillForm.montantbill.$dirty\">Ce champ doit être rempli</span>";
-            res+=               "</input>";
-            res+=       "</div>";
-            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.buyerbill.$invalid && editBillForm.buyerbill.$dirty, 'has-success': editBillForm.buyerbill.$valid}\">";
-            res+=           "<label for=\"buyerbill\">Celui qui paye: </label>";
-            res+=               "<select class=form-control ng-model=\"buyerbill\" ng-options=\"user as user.pseudo for user in friend.users track by user._id\">";
-            res+=               "</select>";
-            res+=       "</div>";
-            res+=       "<div class=\"form-friend\" ng-class=\"{'has-error': editBillForm.ownerbill.$invalid && editBillForm.ownerbill.$dirty, 'has-success': editBillForm.ownerbill.$valid}\">";
-            res+=           "<label for=\"ownerbill\">Ceux qui sont inclus: </label>";
-            res+=               "<select multiple class=form-control ng-model=\"ownerbill\" ng-options=\"user as user.pseudo for user in friend.users track by user._id\">";
-            res+=               "</select>";
-            res+=       "</div>";
-            res+=       "<button class=\"btn btn-primary\" ng-disabled=\"editBillForm.$invalid\">Editer</button>";
-            res+=       "<button class=\"btn btn-warning\">Annuler</button>";
-            res+=   "</form>";
-            return res;
-        }
-
-        testAff = function(param){
-            alert("le paramètre est : " + param);
         }
 
     }
